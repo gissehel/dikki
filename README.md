@@ -35,6 +35,26 @@ Query docker informations
 |  | (default) show informations for non labeled nodes
 | -p | show non labeled nodes as points
 
+# Run inside a docker container
+
+You can run this tool inside a docker container without installing it.
+
+```
+sudo docker run -it --rm -v /run/docker.sock:/var/run/docker.sock gissehel/dikki -t
+```
+
+You can add an alias like :
+
+```
+alias dikki='sudo docker run -it --rm -v /run/docker.sock:/var/run/docker.sock gissehel/dikki'
+```
+
+and then use it like a classical application:
+
+```
+dikki -tc
+```
+
 # examples
 
 ## tree + all

@@ -7,31 +7,31 @@ Query docker informations
 ## switches
 
 | switch | action |
-|-
+|--------|--------|
 |  | (default) output a graphviz digraph for images |
 | -t | output a tree for images |
 
 | switch | action |
-|-
+|--------|--------|
 |  | (default) only show important images (image with a tag, image that hazs no child, or images that has more than one child) |
 | -a | output all images |
 
 ### switches for tree
 
 | switch | action |
-|-
+|--------|--------|
 |  | (default) show "docker image --tree" compatible output 
 | -c | show compact output
 
 | switch | action |
-|-
+|--------|--------|
 | | (default) use unicode tree chars
 | -A | use ascii tree chars
 
 ### switches for digraph
 
 | switch | action |
-|-
+|--------|--------|
 |  | (default) show informations for non labeled nodes
 | -p | show non labeled nodes as points
 

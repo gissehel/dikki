@@ -1,0 +1,30 @@
+digraph docker {
+ "511136ea3c5a" -> "9bd07e480c5b"
+ "511136ea3c5a" -> "aaabd2b41e22"
+ "511136ea3c5a" -> "bd8bd16075a0"
+ "511136ea3c5a" [label="511136ea3c5a\nscratch:all\nscratch:latest",shape=box,fillcolor="paleturquoise",style="filled,rounded"];
+ "9bd07e480c5b" -> "c8f87bf54eb2"
+ "9bd07e480c5b" [label="9bd07e480c5b\nubuntu:14.04\nubuntu:14.04-20141204\nubuntu:latest",shape=box,fillcolor="paleturquoise",style="filled,rounded"];
+ "c8f87bf54eb2" -> "e6e9537db9f5"
+ "c8f87bf54eb2" -> "a8806f0dd059"
+ "c8f87bf54eb2" -> "f08c82e36872"
+ "c8f87bf54eb2" [label="c8f87bf54eb2\ndockerfile/ubuntu:latest",shape=box,fillcolor="paleturquoise",style="filled,rounded"];
+ "e6e9537db9f5" [label="e6e9537db9f5\ndockerfile/mariadb:latest",shape=box,fillcolor="paleturquoise",style="filled,rounded"];
+ "a8806f0dd059" [label="a8806f0dd059\ndockerfile/mongodb:latest",shape=box,fillcolor="paleturquoise",style="filled,rounded"];
+ "f08c82e36872" -> "c08280595650"
+ "f08c82e36872" -> "32a7d82ef0ad"
+ "f08c82e36872" [label="f08c82e36872\ndockerfile/python:latest",shape=box,fillcolor="paleturquoise",style="filled,rounded"];
+ "c08280595650" -> "c0243223464e"
+ "c08280595650" [label="c08280595650\ndockerfile/nodejs:latest",shape=box,fillcolor="paleturquoise",style="filled,rounded"];
+ "c0243223464e" [label="c0243223464e\ndockerfile/ghost:latest",shape=box,fillcolor="paleturquoise",style="filled,rounded"];
+ "32a7d82ef0ad" [label="32a7d82ef0ad\ndockerfile/ansible:latest",shape=box,fillcolor="paleturquoise",style="filled,rounded"];
+ "aaabd2b41e22" -> "481b175a31db"
+ "aaabd2b41e22" [label="aaabd2b41e22\ndebian:jessie",shape=box,fillcolor="paleturquoise",style="filled,rounded"];
+ "481b175a31db" [label="481b175a31db\npython:2.7",shape=box,fillcolor="paleturquoise",style="filled,rounded"];
+ "bd8bd16075a0" -> "c15d04694341"
+ "bd8bd16075a0" [label="bd8bd16075a0\njava:openjdk-7u65-jdk",shape=box,fillcolor="paleturquoise",style="filled,rounded"];
+ "c15d04694341" -> "86aa47422e97"
+ "c15d04694341" -> "459cea0cc31f"
+ "86aa47422e97" [label="86aa47422e97\njenkins:1.585\njenkins:weekly",shape=box,fillcolor="paleturquoise",style="filled,rounded"];
+ "459cea0cc31f" [label="459cea0cc31f\njenkins:1.565.3\njenkins:latest",shape=box,fillcolor="paleturquoise",style="filled,rounded"];
+}

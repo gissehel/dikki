@@ -1,0 +1,163 @@
+digraph docker {
+ "511136ea3c5a" -> "01bf15a18638"
+ "511136ea3c5a" -> "36fd425d7d8a"
+ "511136ea3c5a" -> "848d84b4b2ab"
+ "511136ea3c5a" [label="511136ea3c5a\nscratch:all\nscratch:latest",shape=box,fillcolor="paleturquoise",style="filled,rounded"];
+ "01bf15a18638" -> "30541f8f3062"
+ "01bf15a18638" [label="",shape="point"];
+ "30541f8f3062" -> "e1cdf371fbde"
+ "30541f8f3062" [label="",shape="point"];
+ "e1cdf371fbde" -> "9bd07e480c5b"
+ "e1cdf371fbde" [label="",shape="point"];
+ "9bd07e480c5b" -> "55a37ec28b45"
+ "9bd07e480c5b" [label="9bd07e480c5b\nubuntu:14.04\nubuntu:14.04-20141204\nubuntu:latest",shape=box,fillcolor="paleturquoise",style="filled,rounded"];
+ "55a37ec28b45" -> "3f76613d5c23"
+ "55a37ec28b45" [label="",shape="point"];
+ "3f76613d5c23" -> "d137c5918ab7"
+ "3f76613d5c23" [label="",shape="point"];
+ "d137c5918ab7" -> "0b88dc84850d"
+ "d137c5918ab7" [label="",shape="point"];
+ "0b88dc84850d" -> "46becf174ec3"
+ "0b88dc84850d" [label="",shape="point"];
+ "46becf174ec3" -> "7bc005b1a6b8"
+ "46becf174ec3" [label="",shape="point"];
+ "7bc005b1a6b8" -> "c8f87bf54eb2"
+ "7bc005b1a6b8" [label="",shape="point"];
+ "c8f87bf54eb2" -> "97d5ee92247b"
+ "c8f87bf54eb2" -> "ec09909136b9"
+ "c8f87bf54eb2" -> "553426e58552"
+ "c8f87bf54eb2" [label="c8f87bf54eb2\ndockerfile/ubuntu:latest",shape=box,fillcolor="paleturquoise",style="filled,rounded"];
+ "97d5ee92247b" -> "cfe1a5658613"
+ "97d5ee92247b" [label="",shape="point"];
+ "cfe1a5658613" -> "a8b924cf59c6"
+ "cfe1a5658613" [label="",shape="point"];
+ "a8b924cf59c6" -> "496403f78713"
+ "a8b924cf59c6" [label="",shape="point"];
+ "496403f78713" -> "e6e9537db9f5"
+ "496403f78713" [label="",shape="point"];
+ "e6e9537db9f5" [label="e6e9537db9f5\ndockerfile/mariadb:latest",shape=box,fillcolor="paleturquoise",style="filled,rounded"];
+ "ec09909136b9" -> "b7dfe54cfbe1"
+ "ec09909136b9" [label="",shape="point"];
+ "b7dfe54cfbe1" -> "6d62a973d81d"
+ "b7dfe54cfbe1" [label="",shape="point"];
+ "6d62a973d81d" -> "856c44ffc3f8"
+ "6d62a973d81d" [label="",shape="point"];
+ "856c44ffc3f8" -> "59ecccc98652"
+ "856c44ffc3f8" [label="",shape="point"];
+ "59ecccc98652" -> "a8806f0dd059"
+ "59ecccc98652" [label="",shape="point"];
+ "a8806f0dd059" [label="a8806f0dd059\ndockerfile/mongodb:latest",shape=box,fillcolor="paleturquoise",style="filled,rounded"];
+ "553426e58552" -> "81d305e05cc4"
+ "553426e58552" [label="",shape="point"];
+ "81d305e05cc4" -> "f08c82e36872"
+ "81d305e05cc4" [label="",shape="point"];
+ "f08c82e36872" -> "0a9f07d648ad"
+ "f08c82e36872" -> "31abc03e444c"
+ "f08c82e36872" [label="f08c82e36872\ndockerfile/python:latest",shape=box,fillcolor="paleturquoise",style="filled,rounded"];
+ "0a9f07d648ad" -> "ccceaca2d14c"
+ "0a9f07d648ad" [label="",shape="point"];
+ "ccceaca2d14c" -> "c08280595650"
+ "ccceaca2d14c" [label="",shape="point"];
+ "c08280595650" -> "282a56297ac8"
+ "c08280595650" [label="c08280595650\ndockerfile/nodejs:latest",shape=box,fillcolor="paleturquoise",style="filled,rounded"];
+ "282a56297ac8" -> "3a375b17c9c9"
+ "282a56297ac8" [label="",shape="point"];
+ "3a375b17c9c9" -> "0d920cb5e41f"
+ "3a375b17c9c9" [label="",shape="point"];
+ "0d920cb5e41f" -> "2a10727e3259"
+ "0d920cb5e41f" [label="",shape="point"];
+ "2a10727e3259" -> "75753ccb28c2"
+ "2a10727e3259" [label="",shape="point"];
+ "75753ccb28c2" -> "39ff3354c954"
+ "75753ccb28c2" [label="",shape="point"];
+ "39ff3354c954" -> "c0243223464e"
+ "39ff3354c954" [label="",shape="point"];
+ "c0243223464e" [label="c0243223464e\ndockerfile/ghost:latest",shape=box,fillcolor="paleturquoise",style="filled,rounded"];
+ "31abc03e444c" -> "bc1366ff5694"
+ "31abc03e444c" [label="",shape="point"];
+ "bc1366ff5694" -> "32a7d82ef0ad"
+ "bc1366ff5694" [label="",shape="point"];
+ "32a7d82ef0ad" [label="32a7d82ef0ad\ndockerfile/ansible:latest",shape=box,fillcolor="paleturquoise",style="filled,rounded"];
+ "36fd425d7d8a" -> "aaabd2b41e22"
+ "36fd425d7d8a" [label="",shape="point"];
+ "aaabd2b41e22" -> "f99c114b8ec1"
+ "aaabd2b41e22" [label="aaabd2b41e22\ndebian:jessie",shape=box,fillcolor="paleturquoise",style="filled,rounded"];
+ "f99c114b8ec1" -> "8f3e5f544a17"
+ "f99c114b8ec1" [label="",shape="point"];
+ "8f3e5f544a17" -> "ea9819f761f1"
+ "8f3e5f544a17" [label="",shape="point"];
+ "ea9819f761f1" -> "c00614470320"
+ "ea9819f761f1" [label="",shape="point"];
+ "c00614470320" -> "726152d818e9"
+ "c00614470320" [label="",shape="point"];
+ "726152d818e9" -> "2b954b1bd956"
+ "726152d818e9" [label="",shape="point"];
+ "2b954b1bd956" -> "ef5cb5050906"
+ "2b954b1bd956" [label="",shape="point"];
+ "ef5cb5050906" -> "7b46d54695b8"
+ "ef5cb5050906" [label="",shape="point"];
+ "7b46d54695b8" -> "481b175a31db"
+ "7b46d54695b8" [label="",shape="point"];
+ "481b175a31db" [label="481b175a31db\npython:2.7",shape=box,fillcolor="paleturquoise",style="filled,rounded"];
+ "848d84b4b2ab" -> "71d9d77ae89e"
+ "848d84b4b2ab" [label="",shape="point"];
+ "71d9d77ae89e" -> "34664741b33f"
+ "71d9d77ae89e" [label="",shape="point"];
+ "34664741b33f" -> "bd8bd16075a0"
+ "34664741b33f" [label="",shape="point"];
+ "bd8bd16075a0" -> "c15d04694341"
+ "bd8bd16075a0" [label="bd8bd16075a0\njava:openjdk-7u65-jdk",shape=box,fillcolor="paleturquoise",style="filled,rounded"];
+ "c15d04694341" -> "89bca1176948"
+ "c15d04694341" -> "1d17c9a253ac"
+ "c15d04694341" [label="",shape="point"];
+ "89bca1176948" -> "4c87df3aff81"
+ "89bca1176948" [label="",shape="point"];
+ "4c87df3aff81" -> "29da8066531d"
+ "4c87df3aff81" [label="",shape="point"];
+ "29da8066531d" -> "c36ee84f01da"
+ "29da8066531d" [label="",shape="point"];
+ "c36ee84f01da" -> "587f51973afb"
+ "c36ee84f01da" [label="",shape="point"];
+ "587f51973afb" -> "c996b9075693"
+ "587f51973afb" [label="",shape="point"];
+ "c996b9075693" -> "5eb699ca6952"
+ "c996b9075693" [label="",shape="point"];
+ "5eb699ca6952" -> "3ef6335e3f51"
+ "5eb699ca6952" [label="",shape="point"];
+ "3ef6335e3f51" -> "6d7d2d1e09fc"
+ "3ef6335e3f51" [label="",shape="point"];
+ "6d7d2d1e09fc" -> "5a221a25beba"
+ "6d7d2d1e09fc" [label="",shape="point"];
+ "5a221a25beba" -> "d2c0ea9c8914"
+ "5a221a25beba" [label="",shape="point"];
+ "d2c0ea9c8914" -> "baaa3c2b2ce6"
+ "d2c0ea9c8914" [label="",shape="point"];
+ "baaa3c2b2ce6" -> "86aa47422e97"
+ "baaa3c2b2ce6" [label="",shape="point"];
+ "86aa47422e97" [label="86aa47422e97\njenkins:1.585\njenkins:weekly",shape=box,fillcolor="paleturquoise",style="filled,rounded"];
+ "1d17c9a253ac" -> "91f41f5cecb2"
+ "1d17c9a253ac" [label="",shape="point"];
+ "91f41f5cecb2" -> "c0f735c606df"
+ "91f41f5cecb2" [label="",shape="point"];
+ "c0f735c606df" -> "f24b6e591254"
+ "c0f735c606df" [label="",shape="point"];
+ "f24b6e591254" -> "75f72757b58f"
+ "f24b6e591254" [label="",shape="point"];
+ "75f72757b58f" -> "7a8eb4347a3e"
+ "75f72757b58f" [label="",shape="point"];
+ "7a8eb4347a3e" -> "6e956a37fac0"
+ "7a8eb4347a3e" [label="",shape="point"];
+ "6e956a37fac0" -> "40780950c5d8"
+ "6e956a37fac0" [label="",shape="point"];
+ "40780950c5d8" -> "3e1d6e61b880"
+ "40780950c5d8" [label="",shape="point"];
+ "3e1d6e61b880" -> "76445f4c020e"
+ "3e1d6e61b880" [label="",shape="point"];
+ "76445f4c020e" -> "7f19d2345e67"
+ "76445f4c020e" [label="",shape="point"];
+ "7f19d2345e67" -> "da3243c8d9c4"
+ "7f19d2345e67" [label="",shape="point"];
+ "da3243c8d9c4" -> "459cea0cc31f"
+ "da3243c8d9c4" [label="",shape="point"];
+ "459cea0cc31f" [label="459cea0cc31f\njenkins:1.565.3\njenkins:latest",shape=box,fillcolor="paleturquoise",style="filled,rounded"];
+}

@@ -4,6 +4,9 @@ Query docker informations
 
 **This tool is experimental. The usage and command line may change in the futur in a way that won't keep compatibility.**
 
+**project page** : https://github.com/gissehel/dikki
+**docker hub page** : https://registry.hub.docker.com/u/gissehel/dikki/
+
 ## switches
 
 | switch | action |

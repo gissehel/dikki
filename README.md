@@ -1,11 +1,11 @@
 # dikki
 
-Query docker informations
+Query docker informations. This tools aims to replace depecated `docker images --tree` dans deprecated `docker images --viz` as well as add more features to them.
 
 **This tool is experimental. The usage and command line may change in the futur in a way that won't keep compatibility.**
 
-**project page** : https://github.com/gissehel/dikki
-**docker hub page** : https://registry.hub.docker.com/u/gissehel/dikki/
+* **project page** : https://github.com/gissehel/dikki
+* **docker hub page** : https://registry.hub.docker.com/u/gissehel/dikki/
 
 ## switches
 

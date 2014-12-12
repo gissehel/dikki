@@ -2,48 +2,43 @@
 
 Query docker informations. This tools aims to replace depecated `docker images --tree` dans deprecated `docker images --viz` as well as add more features to them.
 
-**This tool is experimental. The usage and command line may change in the futur in a way that won't keep compatibility.**
-
 * **project page** : https://github.com/gissehel/dikki
 * **docker hub page** : https://registry.hub.docker.com/u/gissehel/dikki/
 
-## switches
+## help
 
-| switch | action |
-|--------|--------|
-|  | (default) output a graphviz digraph for images |
-| -t | output a tree for images |
+```bash
+$ dikki.py help --help
+Usage: dikki.py [GLOBAL OPTIONS] COMMAND_NAME [OPTIONS] [VALUES]
+Docker tool to query informations from images and containers
 
-| switch | action |
-|--------|--------|
-|  | (default) only show important images (image with a tag, image that hazs no child, or images that has more than one child) |
-| -a | output all images |
+Commands:
+    help                 give help
+    images               Get docker images
 
-### switches for tree
+Global options:
+    --help               Get help on specific command
+                         (--help,-h)
 
-| switch | action |
-|--------|--------|
-|  | (default) show "docker image --tree" compatible output 
-| -c | show compact output
-
-| switch | action |
-|--------|--------|
-| | (default) use unicode tree chars
-| -A | use ascii tree chars
-
-### switches for digraph
-
-| switch | action |
-|--------|--------|
-|  | (default) show informations for non labeled nodes
-| -p | show non labeled nodes as points
+images options:
+    --all                Display all nodes
+                         (--all,-a)
+    --ascii              Display trees with ascii chars
+                         (--ascii,-A)
+    --compact            Display trees with compact pattern
+                         (--compact,-c)
+    --output=VALUE       Output the images as [tree|digraph]
+                         (--output,-O)
+    --point              Display non-important nodes as point in graphs
+                         (--point,-p)
+```
 
 # Run inside a docker container
 
 You can run this tool inside a docker container without installing it.
 
 ```
-sudo docker run -it --rm -v /run/docker.sock:/var/run/docker.sock gissehel/dikki -t
+sudo docker run -it --rm -v /run/docker.sock:/var/run/docker.sock gissehel/dikki help
 ```
 
 You can add an alias like :
@@ -55,7 +50,7 @@ alias dikki='sudo docker run -it --rm -v /run/docker.sock:/var/run/docker.sock g
 and then use it like a classical application:
 
 ```
-dikki -tc
+dikki help
 ```
 
 # examples
@@ -63,7 +58,7 @@ dikki -tc
 ## tree + all
 
 ```
-$ sudo dikki.py -ta
+$ sudo dikki.py images --output=tree --all
 511136ea3c5a Virtual Size: 0 Tags: scratch:latest, scratch:all
 ├─01bf15a18638 Virtual Size: 192.48 MB
 │ └─30541f8f3062 Virtual Size: 192.68 MB
@@ -151,7 +146,7 @@ $ sudo dikki.py -ta
 ## tree
 
 ```
-$ sudo dikki.py -t
+$ sudo dikki.py images -O tree
 511136ea3c5a Virtual Size: 0 Tags: scratch:latest, scratch:all
 ├─9bd07e480c5b Virtual Size: 192.68 MB Tags: ubuntu:latest, ubuntu:14.04, ubuntu:14.04-20141204
 │ └─c8f87bf54eb2 Virtual Size: 414.63 MB Tags: dockerfile/ubuntu:latest
@@ -172,7 +167,7 @@ $ sudo dikki.py -t
 ## tree + compact
 
 ```
-$ sudo dikki.py -tc
+$ sudo dikki.py images -O tree --compact
 511136ea3c5a     scratch:all  scratch:latest
 ├─9bd07e480c5b     ubuntu:14.04  ubuntu:14.04-20141204  ubuntu:latest
 │ └─c8f87bf54eb2     dockerfile/ubuntu:latest
@@ -193,7 +188,7 @@ $ sudo dikki.py -tc
 ## tree + compact + Ascii
 
 ```
-$ sudo dikki.py -tcA
+$ sudo dikki.py images -O tree -c -A
 511136ea3c5a     scratch:all  scratch:latest
 +-9bd07e480c5b     ubuntu:14.04  ubuntu:14.04-20141204  ubuntu:latest
 | `-c8f87bf54eb2     dockerfile/ubuntu:latest
@@ -214,7 +209,7 @@ $ sudo dikki.py -tcA
 ## (graph)
 
 ```
-$ sudo dikki.py
+$ sudo dikki.py images
 digraph docker {
  "511136ea3c5a" -> "9bd07e480c5b"
  "511136ea3c5a" -> "aaabd2b41e22"
@@ -252,7 +247,7 @@ digraph docker {
 ## (graph) + point
 
 ```
-$ sudo dikki.py -p | dot -Tpng > images.png
+$ sudo dikki.py images --output=digraph -p | dot -Tpng > images.png
 ```
 
 ![(graph) + point](doc/graph2.png)
@@ -260,7 +255,7 @@ $ sudo dikki.py -p | dot -Tpng > images.png
 ## (graph) + all
 
 ```
-$ sudo dikki.py -a | dot -Tpng > images.png
+$ sudo dikki.py images -O digraph -a | dot -Tpng > images.png
 ```
 
 ![(graph) + all](doc/graph3.png)
@@ -268,10 +263,9 @@ $ sudo dikki.py -a | dot -Tpng > images.png
 ## (graph) + point + all
 
 ```
-$ sudo dikki.py -pa | dot -Tpng > images.png
+$ sudo dikki.py images -O digraph -pa | dot -Tpng > images.png
 ```
 
 ![(graph) + point + all](doc/graph4.png)
-
 
 

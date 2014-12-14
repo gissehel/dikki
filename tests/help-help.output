@@ -1,0 +1,25 @@
+Usage: dikki.py [GLOBAL OPTIONS] COMMAND_NAME [OPTIONS] [VALUES]
+Docker tool to query informations from images and containers
+
+Commands:
+    help                 give help                               
+    images               Get docker images                       
+
+Global options:
+    --help               Get help on specific command            
+                         (--help,-h)
+
+images options:
+    --all                Display all nodes                       
+                         (--all,-a)
+    --ascii              Display trees with ascii chars          
+                         (--ascii,-A)
+    --compact            Display trees with compact pattern      
+                         (--compact,-c)
+    --format=VALUE       Format for table and tree               
+                         (--format,-f)
+    --output=VALUE       Output the images as [tree|digraph|table]
+                         (--output,-O)
+    --point              Display non-important nodes as point in graphs
+                         (--point,-p)
+

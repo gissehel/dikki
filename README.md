@@ -13,21 +13,23 @@ Usage: dikki.py [GLOBAL OPTIONS] COMMAND_NAME [OPTIONS] [VALUES]
 Docker tool to query informations from images and containers
 
 Commands:
-    help                 give help
-    images               Get docker images
+    help                 give help                               
+    images               Get docker images                       
 
 Global options:
-    --help               Get help on specific command
+    --help               Get help on specific command            
                          (--help,-h)
 
 images options:
-    --all                Display all nodes
+    --all                Display all nodes                       
                          (--all,-a)
-    --ascii              Display trees with ascii chars
+    --ascii              Display trees with ascii chars          
                          (--ascii,-A)
-    --compact            Display trees with compact pattern
+    --compact            Display trees with compact pattern      
                          (--compact,-c)
-    --output=VALUE       Output the images as [tree|digraph]
+    --format=VALUE       Format for table and tree               
+                         (--format,-f)
+    --output=VALUE       Output the images as [tree|digraph|table]
                          (--output,-O)
     --point              Display non-important nodes as point in graphs
                          (--point,-p)
@@ -59,7 +61,7 @@ dikki help
 
 ```
 $ sudo dikki.py images --output=tree --all
-511136ea3c5a Virtual Size: 0 Tags: scratch:latest, scratch:all
+511136ea3c5a Virtual Size: 0 Tags: scratch:all, scratch:latest
 ├─01bf15a18638 Virtual Size: 192.48 MB
 │ └─30541f8f3062 Virtual Size: 192.68 MB
 │   └─e1cdf371fbde Virtual Size: 192.68 MB
@@ -140,15 +142,14 @@ $ sudo dikki.py images --output=tree --all
                               └─7f19d2345e67 Virtual Size: 661.75 MB
                                 └─da3243c8d9c4 Virtual Size: 661.75 MB
                                   └─459cea0cc31f Virtual Size: 661.75 MB Tags: jenkins:1.565.3, jenkins:latest
-
 ```
 
 ## tree
 
 ```
 $ sudo dikki.py images -O tree
-511136ea3c5a Virtual Size: 0 Tags: scratch:latest, scratch:all
-├─9bd07e480c5b Virtual Size: 192.68 MB Tags: ubuntu:latest, ubuntu:14.04, ubuntu:14.04-20141204
+511136ea3c5a Virtual Size: 0 Tags: scratch:all, scratch:latest
+├─9bd07e480c5b Virtual Size: 192.68 MB Tags: ubuntu:14.04, ubuntu:14.04-20141204, ubuntu:latest
 │ └─c8f87bf54eb2 Virtual Size: 414.63 MB Tags: dockerfile/ubuntu:latest
 │   ├─e6e9537db9f5 Virtual Size: 666.35 MB Tags: dockerfile/mariadb:latest
 │   ├─a8806f0dd059 Virtual Size: 706.38 MB Tags: dockerfile/mongodb:latest
@@ -168,42 +169,42 @@ $ sudo dikki.py images -O tree
 
 ```
 $ sudo dikki.py images -O tree --compact
-511136ea3c5a     scratch:all  scratch:latest
-├─9bd07e480c5b     ubuntu:14.04  ubuntu:14.04-20141204  ubuntu:latest
-│ └─c8f87bf54eb2     dockerfile/ubuntu:latest
-│   ├─e6e9537db9f5     dockerfile/mariadb:latest
-│   ├─a8806f0dd059     dockerfile/mongodb:latest
-│   └─f08c82e36872     dockerfile/python:latest
-│     ├─c08280595650     dockerfile/nodejs:latest
-│     │ └─c0243223464e     dockerfile/ghost:latest
-│     └─32a7d82ef0ad     dockerfile/ansible:latest
-├─aaabd2b41e22     debian:jessie
-│ └─481b175a31db     python:2.7
-└─bd8bd16075a0     java:openjdk-7u65-jdk
+511136ea3c5a  [ scratch:all scratch:latest ]
+├─9bd07e480c5b  [ ubuntu:14.04 ubuntu:14.04-20141204 ubuntu:latest ]
+│ └─c8f87bf54eb2  [ dockerfile/ubuntu:latest ]
+│   ├─e6e9537db9f5  [ dockerfile/mariadb:latest ]
+│   ├─a8806f0dd059  [ dockerfile/mongodb:latest ]
+│   └─f08c82e36872  [ dockerfile/python:latest ]
+│     ├─c08280595650  [ dockerfile/nodejs:latest ]
+│     │ └─c0243223464e  [ dockerfile/ghost:latest ]
+│     └─32a7d82ef0ad  [ dockerfile/ansible:latest ]
+├─aaabd2b41e22  [ debian:jessie ]
+│ └─481b175a31db  [ python:2.7 ]
+└─bd8bd16075a0  [ java:openjdk-7u65-jdk ]
   └─c15d04694341
-    ├─86aa47422e97     jenkins:1.585  jenkins:weekly
-    └─459cea0cc31f     jenkins:1.565.3  jenkins:latest
+    ├─86aa47422e97  [ jenkins:1.585 jenkins:weekly ]
+    └─459cea0cc31f  [ jenkins:1.565.3 jenkins:latest ]
 ```
 
 ## tree + compact + Ascii
 
 ```
 $ sudo dikki.py images -O tree -c -A
-511136ea3c5a     scratch:all  scratch:latest
-+-9bd07e480c5b     ubuntu:14.04  ubuntu:14.04-20141204  ubuntu:latest
-| `-c8f87bf54eb2     dockerfile/ubuntu:latest
-|   +-e6e9537db9f5     dockerfile/mariadb:latest
-|   +-a8806f0dd059     dockerfile/mongodb:latest
-|   `-f08c82e36872     dockerfile/python:latest
-|     +-c08280595650     dockerfile/nodejs:latest
-|     | `-c0243223464e     dockerfile/ghost:latest
-|     `-32a7d82ef0ad     dockerfile/ansible:latest
-+-aaabd2b41e22     debian:jessie
-| `-481b175a31db     python:2.7
-`-bd8bd16075a0     java:openjdk-7u65-jdk
+511136ea3c5a  [ scratch:all scratch:latest ]
++-9bd07e480c5b  [ ubuntu:14.04 ubuntu:14.04-20141204 ubuntu:latest ]
+| `-c8f87bf54eb2  [ dockerfile/ubuntu:latest ]
+|   +-e6e9537db9f5  [ dockerfile/mariadb:latest ]
+|   +-a8806f0dd059  [ dockerfile/mongodb:latest ]
+|   `-f08c82e36872  [ dockerfile/python:latest ]
+|     +-c08280595650  [ dockerfile/nodejs:latest ]
+|     | `-c0243223464e  [ dockerfile/ghost:latest ]
+|     `-32a7d82ef0ad  [ dockerfile/ansible:latest ]
++-aaabd2b41e22  [ debian:jessie ]
+| `-481b175a31db  [ python:2.7 ]
+`-bd8bd16075a0  [ java:openjdk-7u65-jdk ]
   `-c15d04694341
-    +-86aa47422e97     jenkins:1.585  jenkins:weekly
-    `-459cea0cc31f     jenkins:1.565.3  jenkins:latest
+    +-86aa47422e97  [ jenkins:1.585 jenkins:weekly ]
+    `-459cea0cc31f  [ jenkins:1.565.3 jenkins:latest ]
 ```
 
 ## (graph)
@@ -242,7 +243,7 @@ digraph docker {
 }
 ```
 
-![(graph)](doc/graph1.png)
+![(graph)](doc/graph.png)
 
 ## (graph) + point
 
@@ -250,7 +251,7 @@ digraph docker {
 $ sudo dikki.py images --output=digraph -p | dot -Tpng > images.png
 ```
 
-![(graph) + point](doc/graph2.png)
+![(graph) + point](doc/graph-point.png)
 
 ## (graph) + all
 
@@ -258,7 +259,7 @@ $ sudo dikki.py images --output=digraph -p | dot -Tpng > images.png
 $ sudo dikki.py images -O digraph -a | dot -Tpng > images.png
 ```
 
-![(graph) + all](doc/graph3.png)
+![(graph) + all](doc/graph-all.png)
 
 ## (graph) + point + all
 
@@ -266,6 +267,27 @@ $ sudo dikki.py images -O digraph -a | dot -Tpng > images.png
 $ sudo dikki.py images -O digraph -pa | dot -Tpng > images.png
 ```
 
-![(graph) + point + all](doc/graph4.png)
+![(graph) + point + all](doc/graph-point-all.png)
 
+## (table)
+
+```
+$ sudo dikki.py images -O table
+id            tags                                              created              created      vsize      diffsize 
+============  ================================================  ===================  ===========  =========  =========
+511136ea3c5a  scratch:all scratch:latest                        2013-06-13 21:03:50  1 year ago   0          0        
+9bd07e480c5b  ubuntu:14.04 ubuntu:14.04-20141204 ubuntu:latest  2014-12-04 17:58:31  9 days ago   192.68 MB  192.68 MB
+c8f87bf54eb2  dockerfile/ubuntu:latest                          2014-12-05 05:59:38  9 days ago   414.63 MB  221.95 MB
+e6e9537db9f5  dockerfile/mariadb:latest                         2014-12-05 06:36:35  9 days ago   666.35 MB  251.72 MB
+a8806f0dd059  dockerfile/mongodb:latest                         2014-12-05 06:35:28  9 days ago   706.38 MB  291.76 MB
+f08c82e36872  dockerfile/python:latest                          2014-12-05 06:34:29  9 days ago   471.04 MB  56.4 MB  
+c08280595650  dockerfile/nodejs:latest                          2014-12-05 07:07:19  9 days ago   496.30 MB  25.3 MB  
+c0243223464e  dockerfile/ghost:latest                           2014-12-05 07:19:31  9 days ago   573.02 MB  76.7 MB  
+32a7d82ef0ad  dockerfile/ansible:latest                         2014-12-05 06:58:43  9 days ago   482.98 MB  11.9 MB  
+aaabd2b41e22  debian:jessie                                     2014-11-06 20:43:04  37 days ago  154.69 MB  154.69 MB
+481b175a31db  python:2.7                                        2014-11-26 22:30:48  17 days ago  812.64 MB  657.95 MB
+bd8bd16075a0  java:openjdk-7u65-jdk                             2014-10-23 23:04:11  51 days ago  562.78 MB  562.78 MB
+86aa47422e97  jenkins:1.585 jenkins:weekly                      2014-11-09 07:35:37  35 days ago  661.82 MB  68.3 MB  
+459cea0cc31f  jenkins:1.565.3 jenkins:latest                    2014-11-09 07:35:19  35 days ago  661.75 MB  68.2 MB  
+```
 

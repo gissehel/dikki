@@ -23,6 +23,7 @@ class Image(object):
             self.parent_lid = raw_image['ParentId']
             self.created = raw_image['Created']
             self.virtual_size = raw_image['VirtualSize']
+            self.size = raw_image['Size']
             self.is_root = False
         self.children = []
         self.parent = None

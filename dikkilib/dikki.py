@@ -5,26 +5,27 @@ from __future__ import absolute_import
 import sys
 from cltools import CLRunner
 from supertools import superable
-from .images import Images
+
 
 @CLRunner.runnable()
 @superable
 class Dikki(object):
     '''Docker tool to query informations from images and containers'''
-    def __init__(self):
-        pass
+    def __init__(self, images):
+        self._images = images
 
     @CLRunner.command(params={
-        'output': {'doc':'Output the images as [tree|digraph]', 'aliases': ['O'], 'need_value': True},
+        'output': {'doc':'Output the images as [tree|digraph|table]', 'aliases': ['O'], 'need_value': True},
         'all': {'doc':'Display all nodes', 'aliases': ['a']},
         'compact': {'doc':'Display trees with compact pattern', 'aliases': ['c']},
         'ascii': {'doc':'Display trees with ascii chars', 'aliases': ['A']},
         'point': {'doc':'Display non-important nodes as point in graphs', 'aliases': ['p']},
+        'format': {'doc':'Format for table and tree', 'aliases': ['f'], 'need_value': True},
         })
     def images(self, args, kwargs):
         """Get docker images"""
         # print (args, kwargs)
-        outputs = ('tree','digraph')
+        outputs = ('tree','digraph','table')
         if 'output' not in kwargs:
             self.errorexit('You must provide an output for images. Correct values are : %s' % (', '.join(list(outputs)),))
         if kwargs['output'] not in outputs:
@@ -34,7 +35,7 @@ class Dikki(object):
         tag = ''
         if len(args) > 0:
             tag = args[0]
-        Images().write_result(sys.stdout, tag, all=('all' in kwargs), as_point=('point' in kwargs), mode_tree=(kwargs['output']=='tree'), mode_compact=('compact' in kwargs), mode_ascii=('ascii' in kwargs))
+        self._images.write_result(sys.stdout, tag, all=('all' in kwargs), as_point=('point' in kwargs), output=kwargs['output'], mode_compact=('compact' in kwargs), mode_ascii=('ascii' in kwargs), data_format=(kwargs['format'] if 'format' in kwargs else None))
 
 
     @CLRunner.param(name='help',aliases=['h'])

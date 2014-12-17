@@ -46,7 +46,7 @@ sudo docker run -it --rm -v /run/docker.sock:/var/run/docker.sock gissehel/dikki
 You can add an alias like :
 
 ```
-alias dikki='sudo docker run -it --rm -v /run/docker.sock:/var/run/docker.sock gissehel/dikki'
+alias dikki='sudo docker run -i --rm -v /run/docker.sock:/var/run/docker.sock gissehel/dikki'
 ```
 
 and then use it like a classical application:
@@ -56,6 +56,8 @@ dikki help
 ```
 
 # examples
+
+All the examples use the same base of images.
 
 ## tree + all
 

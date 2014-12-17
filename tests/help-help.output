@@ -18,7 +18,7 @@ images options:
                          (--compact,-c)
     --format=VALUE       Format for table and tree               
                          (--format,-f)
-    --output=VALUE       Output the images as [tree|digraph|table]
+    --output=VALUE       Output the images as [tree|digraph|table|treetable]
                          (--output,-O)
     --point              Display non-important nodes as point in graphs
                          (--point,-p)

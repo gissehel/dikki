@@ -1,0 +1,17 @@
+CREATED               TAGS                                                  
+====================  ======================================================
+[ 1 year ]            scratch:all :: scratch:latest                         
+├─[ 9 days ]          ubuntu:14.04 :: ubuntu:14.04-20141204 :: ubuntu:latest
+│ └─[ 9 days ]        dockerfile/ubuntu:latest                              
+│   ├─[ 9 days ]      dockerfile/mariadb:latest                             
+│   ├─[ 9 days ]      dockerfile/mongodb:latest                             
+│   └─[ 9 days ]      dockerfile/python:latest                              
+│     ├─[ 9 days ]    dockerfile/nodejs:latest                              
+│     │ └─[ 9 days ]  dockerfile/ghost:latest                               
+│     └─[ 9 days ]    dockerfile/ansible:latest                             
+├─[ 37 days ]         debian:jessie                                         
+│ └─[ 17 days ]       python:2.7                                            
+└─[ 51 days ]         java:openjdk-7u65-jdk                                 
+  └─[ 51 days ]                                                             
+    ├─[ 35 days ]     jenkins:1.585 :: jenkins:weekly                       
+    └─[ 35 days ]     jenkins:1.565.3 :: jenkins:latest                     

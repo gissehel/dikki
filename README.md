@@ -29,7 +29,7 @@ images options:
                          (--compact,-c)
     --format=VALUE       Format for table and tree               
                          (--format,-f)
-    --output=VALUE       Output the images as [tree|digraph|table]
+    --output=VALUE       Output the images as [tree|digraph|table|treetable]
                          (--output,-O)
     --point              Display non-important nodes as point in graphs
                          (--point,-p)
@@ -289,5 +289,50 @@ aaabd2b41e22  debian:jessie                                     2014-11-06 20:43
 bd8bd16075a0  java:openjdk-7u65-jdk                             2014-10-23 23:04:11  51 days ago  562.78 MB  562.78 MB
 86aa47422e97  jenkins:1.585 jenkins:weekly                      2014-11-09 07:35:37  35 days ago  661.82 MB  68.3 MB  
 459cea0cc31f  jenkins:1.565.3 jenkins:latest                    2014-11-09 07:35:19  35 days ago  661.75 MB  68.2 MB  
+```
+
+## (treetable)
+```
+$ # same as sudo dikki.py images -O treetable -f 'id/tags/created/createdrel#created/vsize/diffsize'
+$ sudo dikki.py images -O treetable
+id                      tags                                              created              created      vsize      diffsize 
+======================  ================================================  ===================  ===========  =========  =========
+511136ea3c5a            scratch:all scratch:latest                        2013-06-13 21:03:50  1 year ago   0          0        
+├─9bd07e480c5b          ubuntu:14.04 ubuntu:14.04-20141204 ubuntu:latest  2014-12-04 17:58:31  9 days ago   192.68 MB  192.68 MB
+│ └─c8f87bf54eb2        dockerfile/ubuntu:latest                          2014-12-05 05:59:38  9 days ago   414.63 MB  221.95 MB
+│   ├─e6e9537db9f5      dockerfile/mariadb:latest                         2014-12-05 06:36:35  9 days ago   666.35 MB  251.72 MB
+│   ├─a8806f0dd059      dockerfile/mongodb:latest                         2014-12-05 06:35:28  9 days ago   706.38 MB  291.76 MB
+│   └─f08c82e36872      dockerfile/python:latest                          2014-12-05 06:34:29  9 days ago   471.04 MB  56.4 MB  
+│     ├─c08280595650    dockerfile/nodejs:latest                          2014-12-05 07:07:19  9 days ago   496.30 MB  25.3 MB  
+│     │ └─c0243223464e  dockerfile/ghost:latest                           2014-12-05 07:19:31  9 days ago   573.02 MB  76.7 MB  
+│     └─32a7d82ef0ad    dockerfile/ansible:latest                         2014-12-05 06:58:43  9 days ago   482.98 MB  11.9 MB  
+├─aaabd2b41e22          debian:jessie                                     2014-11-06 20:43:04  37 days ago  154.69 MB  154.69 MB
+│ └─481b175a31db        python:2.7                                        2014-11-26 22:30:48  17 days ago  812.64 MB  657.95 MB
+└─bd8bd16075a0          java:openjdk-7u65-jdk                             2014-10-23 23:04:11  51 days ago  562.78 MB  562.78 MB
+  └─c15d04694341                                                          2014-10-23 23:09:39  51 days ago  593.54 MB  30.8 MB  
+    ├─86aa47422e97      jenkins:1.585 jenkins:weekly                      2014-11-09 07:35:37  35 days ago  661.82 MB  68.3 MB  
+    └─459cea0cc31f      jenkins:1.565.3 jenkins:latest                    2014-11-09 07:35:19  35 days ago  661.75 MB  68.2 MB  
+```
+
+## (treetable) + format
+```
+$ sudo dikki.py images -O treetable -f '"[ "createdrel" ]"#CREATED/tags< :: >#TAGS'
+CREATED               TAGS                                                  
+====================  ======================================================
+[ 1 year ]            scratch:all :: scratch:latest                         
+├─[ 9 days ]          ubuntu:14.04 :: ubuntu:14.04-20141204 :: ubuntu:latest
+│ └─[ 9 days ]        dockerfile/ubuntu:latest                              
+│   ├─[ 9 days ]      dockerfile/mariadb:latest                             
+│   ├─[ 9 days ]      dockerfile/mongodb:latest                             
+│   └─[ 9 days ]      dockerfile/python:latest                              
+│     ├─[ 9 days ]    dockerfile/nodejs:latest                              
+│     │ └─[ 9 days ]  dockerfile/ghost:latest                               
+│     └─[ 9 days ]    dockerfile/ansible:latest                             
+├─[ 37 days ]         debian:jessie                                         
+│ └─[ 17 days ]       python:2.7                                            
+└─[ 51 days ]         java:openjdk-7u65-jdk                                 
+  └─[ 51 days ]                                                             
+    ├─[ 35 days ]     jenkins:1.585 :: jenkins:weekly                       
+    └─[ 35 days ]     jenkins:1.565.3 :: jenkins:latest                     
 ```
 

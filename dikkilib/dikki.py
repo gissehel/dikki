@@ -15,7 +15,7 @@ class Dikki(object):
         self._images = images
 
     @CLRunner.command(params={
-        'output': {'doc':'Output the images as [tree|digraph|table]', 'aliases': ['O'], 'need_value': True},
+        'output': {'doc':'Output the images as [tree|digraph|table|treetable]', 'aliases': ['O'], 'need_value': True},
         'all': {'doc':'Display all nodes', 'aliases': ['a']},
         'compact': {'doc':'Display trees with compact pattern', 'aliases': ['c']},
         'ascii': {'doc':'Display trees with ascii chars', 'aliases': ['A']},
@@ -25,13 +25,13 @@ class Dikki(object):
     def images(self, args, kwargs):
         """Get docker images"""
         # print (args, kwargs)
-        outputs = ('tree','digraph','table')
+        outputs = (u'tree',u'digraph',u'table',u'treetable')
         if 'output' not in kwargs:
-            self.errorexit('You must provide an output for images. Correct values are : %s' % (', '.join(list(outputs)),))
+            self.errorexit(u'You must provide an output for images. Correct values are : %s' % (u', '.join(list(outputs)),))
         if kwargs['output'] not in outputs:
-            self.errorexit('[%s] is invalid : output must be one of : %s' % (kwargs['output'], ', '.join(list(outputs))))
+            self.errorexit(u'[%s] is invalid : output must be one of : %s' % (kwargs['output'], u', '.join(list(outputs))))
         if len(args) > 1:
-            self.errorexit('Currently this tool only support one tag as argument.')
+            self.errorexit(u'Currently this tool only support one tag as argument.')
         tag = ''
         if len(args) > 0:
             tag = args[0]

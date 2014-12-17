@@ -9,6 +9,8 @@ from .dikki import Dikki
 from .images import Images
 from .image_walker import ImageWalker
 from .image import Image
+from . import time_mock
+from . import tools
 from .raw_docker_mock import RawDockerMock
 
 class HandleMock(object):
@@ -23,7 +25,9 @@ class TestDikki(unittest.TestCase):
         self.maxDiff = None
         self._stdout_backup = sys.stdout
         self._stdout = HandleMock()
+        time_mock.current_time = 1418554800.
 
+        tools.time = time_mock
         sys.stdout = self._stdout
 
         raw_docker = RawDockerMock()
@@ -76,6 +80,12 @@ class TestDikki(unittest.TestCase):
     def test_table(self):
         self.compare_result_files( ['tests.com', 'images', '--output=table'], 'table' )
 
+    def test_treetable(self):
+        self.compare_result_files( ['tests.com', 'images', '-O', 'treetable'], 'treetable' )
+
+    def test_treetable_format(self):
+        self.compare_result_files( ['', 'images', '-O', 'treetable', '-f', '"[ "createdrel" ]"#CREATED/tags< :: >#TAGS'], 'treetable-format' )
+
     def test_help(self):
         self.compare_result_files( ['dikki.py', 'help', '--help'], 'help-help' )
 
@@ -84,4 +94,5 @@ class TestDikki(unittest.TestCase):
 
     def tearDown(self):
         sys.stdout = self._stdout_backup
+        tools.time = time_mock.backup_time
 

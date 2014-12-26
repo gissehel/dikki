@@ -96,6 +96,9 @@ class TestDikki(unittest.TestCase):
     def test_containters_table_all(self):
         self.compare_result_files( ['tests.com', 'containers', '--output=table', '-a'], 'containers-table-all' )
 
+    def test_containters_table_all_format(self):
+        self.compare_result_files( ['tests.com', 'containers', '--output=table', '--all', '-f', 'id/image/created/createdrel" ago"#created/status/ip/names'], 'containers-table-all-format' )
+
     def test_help(self):
         self.compare_result_files( ['dikki.py', 'help', '--help'], 'help-help' )
 

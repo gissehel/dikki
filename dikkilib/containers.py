@@ -40,6 +40,7 @@ class Containers(Attributable):
         'image': (lambda walker_item: walker_item.item.image),
         'ports': (lambda walker_item: format_ports(walker_item.item.ports)),
         'names': (lambda walker_item, sep=', ': sep.join(walker_item.item.names)),
+        'ip': (lambda walker_item: walker_item.item.ip),
         }
 
     def write_result(self, handle, all=False, output=None, mode_ascii=False, data_format=None):

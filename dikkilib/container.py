@@ -21,6 +21,7 @@ class Container(object):
         self.tags = [None]
         self.running = raw_container_info['State']['Running']
         self.command = raw_container_info['Path']
+        self.ip = raw_container_info['NetworkSettings']['IPAddress']
         self.is_important = self.running
 
     #def set_parent(self, parent):

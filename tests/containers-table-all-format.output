@@ -1,0 +1,6 @@
+id            image            created              created      status                  ip            names           
+============  ===============  ===================  ===========  ======================  ============  ================
+40ba966812db  jenkins:1.565.3  2014-12-14 08:09:59  2 hours ago  Up 2 hours              172.17.2.175  jovial_bardeen  
+1c63c1c8b94b  jenkins:1.565.3  2014-12-14 03:46:05  7 hours ago  Up 7 hours              172.17.2.170  nostalgic_turing
+e2e9ea0741ab  ubuntu:14.04     2014-12-14 03:45:31  7 hours ago  Up 7 hours              172.17.2.168  ubu2            
+cfec26c45be3  ubuntu:14.04     2014-12-14 03:45:23  7 hours ago  Exited (0) 7 hours ago                ubu             

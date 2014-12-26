@@ -107,6 +107,12 @@ def format_ports(port_infos):
     unmapped_ports = sorted(format_port(port_info) for port_info in port_infos if 'PublicPort' not in port_info)
     return ', '.join(unmapped_ports + mapped_ports)
 
+def format_bool(value):
+    if value:
+        return "Yes"
+    else:
+        return "No"
+
 def human_readable_bytes(x):
     # hybrid of http://stackoverflow.com/a/10171475/2595465
     #      with http://stackoverflow.com/a/5414105/2595465

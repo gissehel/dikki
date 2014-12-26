@@ -9,6 +9,7 @@ from .tools import write_tree
 from .tools import format_time
 from .tools import format_time_rel
 from .tools import format_ports
+from .tools import format_bool
 from .tools import get_tree_prefix
 from .tools import wrap_handle
 
@@ -32,7 +33,7 @@ class Containers(Attributable):
     _attribut_getter = {
         'id': (lambda walker_item: walker_item.item.sid),
         'longid': (lambda walker_item: walker_item.item.lid),
-        'running': (lambda walker_item: walker_item.item.running),
+        'running': (lambda walker_item: format_bool(walker_item.item.running)),
         'created': (lambda walker_item: format_time(walker_item.item.created)),
         'createdrel': (lambda walker_item: format_time_rel(walker_item.item.created)),
         'command': (lambda walker_item: ('"%s"' % (walker_item.item.command,))[:20]),

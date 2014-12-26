@@ -11,8 +11,9 @@ from supertools import superable
 @superable
 class Dikki(object):
     '''Docker tool to query informations from images and containers'''
-    def __init__(self, images):
+    def __init__(self, images, containers):
         self._images = images
+        self._containers = containers
 
     @CLRunner.command(params={
         'output': {'doc':'Output the images as [tree|digraph|table|treetable]', 'aliases': ['O'], 'need_value': True},
@@ -20,7 +21,7 @@ class Dikki(object):
         'compact': {'doc':'Display trees with compact pattern', 'aliases': ['c']},
         'ascii': {'doc':'Display trees with ascii chars', 'aliases': ['A']},
         'point': {'doc':'Display non-important nodes as point in graphs', 'aliases': ['p']},
-        'format': {'doc':'Format for table and tree', 'aliases': ['f'], 'need_value': True},
+        'format': {'doc':'Format for table, tree and treetable', 'aliases': ['f'], 'need_value': True},
         })
     def images(self, args, kwargs):
         """Get docker images"""
@@ -37,6 +38,22 @@ class Dikki(object):
             tag = args[0]
         self._images.write_result(sys.stdout, tag, all=('all' in kwargs), as_point=('point' in kwargs), output=kwargs['output'], mode_compact=('compact' in kwargs), mode_ascii=('ascii' in kwargs), data_format=(kwargs['format'] if 'format' in kwargs else None))
 
+    @CLRunner.command(params={
+        'output': {'doc':'Output the images as [table]', 'aliases': ['O'], 'need_value': True},
+        'all': {'doc':'Display all containers', 'aliases': ['a']},
+        'format': {'doc':'Format for table', 'aliases': ['f'], 'need_value': True},
+        })
+    def containers(self, args, kwargs):
+        """Get docker containers"""
+        # print (args, kwargs)
+        outputs = (u'table')
+        if 'output' not in kwargs:
+            self.errorexit(u'You must provide an output for images. Correct values are : %s' % (u', '.join(list(outputs)),))
+        if kwargs['output'] not in outputs:
+            self.errorexit(u'[%s] is invalid : output must be one of : %s' % (kwargs['output'], u', '.join(list(outputs))))
+        if len(args) > 0:
+            self.errorexit(u'Currently this tool doesn\'t support container name.')
+        self._containers.write_result(sys.stdout, all=('all' in kwargs), output=kwargs['output'], mode_ascii=('ascii' in kwargs), data_format=(kwargs['format'] if 'format' in kwargs else None))
 
     @CLRunner.param(name='help',aliases=['h'])
     def help_param(self,**kwargs) :
@@ -45,6 +62,6 @@ class Dikki(object):
 
     @CLRunner.command()
     def help(self, args=[], kwargs={}) :
-        """give help"""
+        """Give help"""
         self.__super.help()
 

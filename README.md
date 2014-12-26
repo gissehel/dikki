@@ -13,12 +13,21 @@ Usage: dikki.py [GLOBAL OPTIONS] COMMAND_NAME [OPTIONS] [VALUES]
 Docker tool to query informations from images and containers
 
 Commands:
-    help                 give help                               
+    containers           Get docker containers                   
+    help                 Give help                               
     images               Get docker images                       
 
 Global options:
     --help               Get help on specific command            
                          (--help,-h)
+
+containers options:
+    --all                Display all containers                  
+                         (--all,-a)
+    --format=VALUE       Format for table                        
+                         (--format,-f)
+    --output=VALUE       Output the images as [table]            
+                         (--output,-O)
 
 images options:
     --all                Display all nodes                       
@@ -27,7 +36,7 @@ images options:
                          (--ascii,-A)
     --compact            Display trees with compact pattern      
                          (--compact,-c)
-    --format=VALUE       Format for table and tree               
+    --format=VALUE       Format for table, tree and treetable    
                          (--format,-f)
     --output=VALUE       Output the images as [tree|digraph|table|treetable]
                          (--output,-O)
@@ -59,7 +68,7 @@ dikki help
 
 All the examples use the same base of images.
 
-## tree + all
+## images (tree) + all
 
 ```
 $ sudo dikki.py images --output=tree --all
@@ -146,7 +155,7 @@ $ sudo dikki.py images --output=tree --all
                                   └─459cea0cc31f Virtual Size: 661.75 MB Tags: jenkins:1.565.3, jenkins:latest
 ```
 
-## tree
+## images (tree)
 
 ```
 $ sudo dikki.py images -O tree
@@ -167,7 +176,7 @@ $ sudo dikki.py images -O tree
     └─459cea0cc31f Virtual Size: 661.75 MB Tags: jenkins:1.565.3, jenkins:latest
 ```
 
-## tree + compact
+## images (tree) + compact
 
 ```
 $ sudo dikki.py images -O tree --compact
@@ -188,7 +197,7 @@ $ sudo dikki.py images -O tree --compact
     └─459cea0cc31f  [ jenkins:1.565.3 jenkins:latest ]
 ```
 
-## tree + compact + Ascii
+## images (tree) + compact + Ascii
 
 ```
 $ sudo dikki.py images -O tree -c -A
@@ -209,7 +218,7 @@ $ sudo dikki.py images -O tree -c -A
     `-459cea0cc31f  [ jenkins:1.565.3 jenkins:latest ]
 ```
 
-## (graph)
+## images (graph)
 
 ```
 $ sudo dikki.py images
@@ -245,33 +254,33 @@ digraph docker {
 }
 ```
 
-![(graph)](doc/graph.png)
+![(graph)](doc/images-graph.png)
 
-## (graph) + point
+## images (graph) + point
 
 ```
 $ sudo dikki.py images --output=digraph -p | dot -Tpng > images.png
 ```
 
-![(graph) + point](doc/graph-point.png)
+![(graph) + point](doc/images-graph-point.png)
 
-## (graph) + all
+## images (graph) + all
 
 ```
 $ sudo dikki.py images -O digraph -a | dot -Tpng > images.png
 ```
 
-![(graph) + all](doc/graph-all.png)
+![(graph) + all](doc/images-graph-all.png)
 
-## (graph) + point + all
+## images (graph) + point + all
 
 ```
 $ sudo dikki.py images -O digraph -pa | dot -Tpng > images.png
 ```
 
-![(graph) + point + all](doc/graph-point-all.png)
+![(graph) + point + all](doc/images-graph-point-all.png)
 
-## (table)
+## images (table)
 
 ```
 $ sudo dikki.py images -O table
@@ -289,11 +298,12 @@ c0243223464e  dockerfile/ghost:latest                           2014-12-05 07:19
 aaabd2b41e22  debian:jessie                                     2014-11-06 20:43:04  37 days ago  154.69 MB  154.69 MB
 481b175a31db  python:2.7                                        2014-11-26 22:30:48  17 days ago  812.64 MB  657.95 MB
 bd8bd16075a0  java:openjdk-7u65-jdk                             2014-10-23 23:04:11  51 days ago  562.78 MB  562.78 MB
+c15d04694341                                                    2014-10-23 23:09:39  51 days ago  593.54 MB  30.8 MB  
 86aa47422e97  jenkins:1.585 jenkins:weekly                      2014-11-09 07:35:37  35 days ago  661.82 MB  68.3 MB  
 459cea0cc31f  jenkins:1.565.3 jenkins:latest                    2014-11-09 07:35:19  35 days ago  661.75 MB  68.2 MB  
 ```
 
-## (treetable)
+## images (treetable)
 ```
 $ # same as sudo dikki.py images -O treetable -f 'id/tags/created/createdrel#created/vsize/diffsize'
 $ sudo dikki.py images -O treetable
@@ -316,7 +326,7 @@ id                      tags                                              create
     └─459cea0cc31f      jenkins:1.565.3 jenkins:latest                    2014-11-09 07:35:19  35 days ago  661.75 MB  68.2 MB  
 ```
 
-## (treetable) + format
+## images (treetable) + format
 ```
 $ sudo dikki.py images -O treetable -f '"[ "createdrel" ]"#CREATED/tags< :: >#TAGS'
 CREATED               TAGS                                                  
@@ -337,4 +347,26 @@ CREATED               TAGS
     ├─[ 35 days ]     jenkins:1.585 :: jenkins:weekly                       
     └─[ 35 days ]     jenkins:1.565.3 :: jenkins:latest                     
 ```
+
+## containers (table)
+```
+$ sudo dikki.py containers -O table
+id            image            command               created      status      ports                              names           
+============  ===============  ====================  ===========  ==========  =================================  ================
+40ba966812db  jenkins:1.565.3  "/usr/local/bin/jenk  2 hours ago  Up 2 hours  50000/tcp, 0.0.0.0:9090->8080/tcp  jovial_bardeen  
+1c63c1c8b94b  jenkins:1.565.3  "/usr/local/bin/jenk  7 hours ago  Up 7 hours  50000/tcp, 8080/tcp                nostalgic_turing
+e2e9ea0741ab  ubuntu:14.04     "/bin/bash"           7 hours ago  Up 7 hours                                     ubu2            
+```
+
+## containers (table) + all
+```
+$ sudo dikki.py containers -O table --all
+id            image            command               created      status                  ports                              names           
+============  ===============  ====================  ===========  ======================  =================================  ================
+40ba966812db  jenkins:1.565.3  "/usr/local/bin/jenk  2 hours ago  Up 2 hours              50000/tcp, 0.0.0.0:9090->8080/tcp  jovial_bardeen  
+1c63c1c8b94b  jenkins:1.565.3  "/usr/local/bin/jenk  7 hours ago  Up 7 hours              50000/tcp, 8080/tcp                nostalgic_turing
+e2e9ea0741ab  ubuntu:14.04     "/bin/bash"           7 hours ago  Up 7 hours                                                 ubu2            
+cfec26c45be3  ubuntu:14.04     "/bin/bash"           7 hours ago  Exited (0) 7 hours ago                                     ubu             
+```
+
 

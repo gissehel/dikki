@@ -6,9 +6,12 @@ import unittest
 import sys
 import os
 from .dikki import Dikki
+from .image import Image
 from .images import Images
 from .image_walker import ImageWalker
-from .image import Image
+from .container import Container
+from .containers import Containers
+from .container_walker import ContainerWalker
 from . import time_mock
 from . import tools
 from .raw_docker_mock import RawDockerMock
@@ -32,7 +35,8 @@ class TestDikki(unittest.TestCase):
 
         raw_docker = RawDockerMock()
         images = Images(Image, ImageWalker, raw_docker)
-        self._dikki = Dikki(images)
+        containers = Containers(Container, ContainerWalker, raw_docker)
+        self._dikki = Dikki(images, containers)
 
     def test_stdout_mock(self):
         print "poide"
@@ -53,38 +57,44 @@ class TestDikki(unittest.TestCase):
 
         self.assertEqual(self._stdout._content, expected_output)
 
-    def test_tree(self):
-        self.compare_result_files( ['tests.com', 'images', '-O', 'tree'], 'tree' )
+    def test_images_tree(self):
+        self.compare_result_files( ['tests.com', 'images', '-O', 'tree'], 'images-tree' )
 
-    def test_tree_all(self):
-        self.compare_result_files( ['tests.com', 'images', '--output=tree', '--all'], 'tree-all' )
+    def test_images_tree_all(self):
+        self.compare_result_files( ['tests.com', 'images', '--output=tree', '--all'], 'images-tree-all' )
 
-    def test_tree_compact(self):
-        self.compare_result_files( ['tests.com', 'images', '--output=tree', '--compact'], 'tree-compact' )
+    def test_images_tree_compact(self):
+        self.compare_result_files( ['tests.com', 'images', '--output=tree', '--compact'], 'images-tree-compact' )
 
-    def test_tree_compact_ascii(self):
-        self.compare_result_files( ['tests.com', 'images', '--output=tree', '-cA'], 'tree-compact-ascii' )
+    def test_images_tree_compact_ascii(self):
+        self.compare_result_files( ['tests.com', 'images', '--output=tree', '-cA'], 'images-tree-compact-ascii' )
 
-    def test_graph(self):
-        self.compare_result_files( ['tests.com', 'images', '--output=digraph'], 'graph' )
+    def test_images_graph(self):
+        self.compare_result_files( ['tests.com', 'images', '--output=digraph'], 'images-graph' )
 
-    def test_graph_all(self):
-        self.compare_result_files( ['tests.com', 'images', '--output=digraph', '-a'], 'graph-all' )
+    def test_images_graph_all(self):
+        self.compare_result_files( ['tests.com', 'images', '--output=digraph', '-a'], 'images-graph-all' )
 
-    def test_graph_point(self):
-        self.compare_result_files( ['tests.com', 'images', '--output=digraph', '--point'], 'graph-point' )
+    def test_images_graph_point(self):
+        self.compare_result_files( ['tests.com', 'images', '--output=digraph', '--point'], 'images-graph-point' )
 
-    def test_graph_point_all(self):
-        self.compare_result_files( ['tests.com', 'images', '--output=digraph', '-ap'], 'graph-point-all' )
+    def test_images_graph_point_all(self):
+        self.compare_result_files( ['tests.com', 'images', '--output=digraph', '-ap'], 'images-graph-point-all' )
 
-    def test_table(self):
-        self.compare_result_files( ['tests.com', 'images', '--output=table'], 'table' )
+    def test_images_table(self):
+        self.compare_result_files( ['tests.com', 'images', '--output=table'], 'images-table' )
 
-    def test_treetable(self):
-        self.compare_result_files( ['tests.com', 'images', '-O', 'treetable'], 'treetable' )
+    def test_images_treetable(self):
+        self.compare_result_files( ['tests.com', 'images', '-O', 'treetable'], 'images-treetable' )
 
-    def test_treetable_format(self):
-        self.compare_result_files( ['', 'images', '-O', 'treetable', '-f', '"[ "createdrel" ]"#CREATED/tags< :: >#TAGS'], 'treetable-format' )
+    def test_images_treetable_format(self):
+        self.compare_result_files( ['', 'images', '-O', 'treetable', '-f', '"[ "createdrel" ]"#CREATED/tags< :: >#TAGS'], 'images-treetable-format' )
+
+    def test_containters_table(self):
+        self.compare_result_files( ['tests.com', 'containers', '--output=table'], 'containers-table' )
+
+    def test_containters_table_all(self):
+        self.compare_result_files( ['tests.com', 'containers', '--output=table', '-a'], 'containers-table-all' )
 
     def test_help(self):
         self.compare_result_files( ['dikki.py', 'help', '--help'], 'help-help' )

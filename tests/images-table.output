@@ -12,5 +12,6 @@ c0243223464e  dockerfile/ghost:latest                           2014-12-05 07:19
 aaabd2b41e22  debian:jessie                                     2014-11-06 20:43:04  37 days ago  154.69 MB  154.69 MB
 481b175a31db  python:2.7                                        2014-11-26 22:30:48  17 days ago  812.64 MB  657.95 MB
 bd8bd16075a0  java:openjdk-7u65-jdk                             2014-10-23 23:04:11  51 days ago  562.78 MB  562.78 MB
+c15d04694341                                                    2014-10-23 23:09:39  51 days ago  593.54 MB  30.8 MB  
 86aa47422e97  jenkins:1.585 jenkins:weekly                      2014-11-09 07:35:37  35 days ago  661.82 MB  68.3 MB  
 459cea0cc31f  jenkins:1.565.3 jenkins:latest                    2014-11-09 07:35:19  35 days ago  661.75 MB  68.2 MB  

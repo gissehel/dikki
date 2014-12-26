@@ -92,6 +92,21 @@ def format_time_rel(value):
         return u"1 year"
     return u"%s years" % (diff,)
 
+def format_port(port_info):
+    if 'Type' in port_info and 'PrivatePort' in port_info:
+        mapping = port_info['PrivatePort']
+        proto = port_info['Type']
+        if 'PublicPort' in port_info:
+            mapping = u'%s->%s' % (port_info['PublicPort'], mapping)
+        if 'IP' in port_info:
+            mapping = u'%s:%s' % (port_info['IP'], mapping)
+        return u'%s/%s' % (mapping, proto)
+
+def format_ports(port_infos):
+    mapped_ports = sorted(format_port(port_info) for port_info in port_infos if 'PublicPort' in port_info)
+    unmapped_ports = sorted(format_port(port_info) for port_info in port_infos if 'PublicPort' not in port_info)
+    return ', '.join(unmapped_ports + mapped_ports)
+
 def human_readable_bytes(x):
     # hybrid of http://stackoverflow.com/a/10171475/2595465
     #      with http://stackoverflow.com/a/5414105/2595465

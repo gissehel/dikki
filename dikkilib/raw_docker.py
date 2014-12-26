@@ -15,3 +15,10 @@ class RawDocker(object):
     def get_images(self):
         return self.get_docker().images(quiet=False, all=True)
 
+    def get_containers(self):
+        return self.get_docker().containers(quiet=False, all=True)
+
+    def get_container_info(self, id):
+        return self.get_docker().inspect_container(id)
+
+

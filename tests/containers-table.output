@@ -1,0 +1,5 @@
+id            image            command               created      status      ports                              names           
+============  ===============  ====================  ===========  ==========  =================================  ================
+40ba966812db  jenkins:1.565.3  "/usr/local/bin/jenk  2 hours ago  Up 2 hours  50000/tcp, 0.0.0.0:9090->8080/tcp  jovial_bardeen  
+1c63c1c8b94b  jenkins:1.565.3  "/usr/local/bin/jenk  7 hours ago  Up 7 hours  50000/tcp, 8080/tcp                nostalgic_turing
+e2e9ea0741ab  ubuntu:14.04     "/bin/bash"           7 hours ago  Up 7 hours                                     ubu2            

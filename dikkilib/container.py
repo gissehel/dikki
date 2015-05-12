@@ -19,9 +19,13 @@ class Container(object):
         self.ports = raw_container['Ports']
         self.status = raw_container['Status']
         self.tags = [None]
+        self.imagelid = raw_container_info['Image']
+        self.imagesid = self.imagelid[:12]
         self.running = raw_container_info['State']['Running']
         self.command = raw_container_info['Path']
         self.ip = raw_container_info['NetworkSettings']['IPAddress']
+        self.ipv6 = raw_container_info['NetworkSettings']['LinkLocalIPv6Address']
+        self.mac = raw_container_info['NetworkSettings']['MacAddress']
         self.is_important = self.running
 
     #def set_parent(self, parent):

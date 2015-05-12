@@ -39,9 +39,12 @@ class Containers(Attributable):
         'command': (lambda walker_item: ('"%s"' % (walker_item.item.command,))[:20]),
         'status': (lambda walker_item: walker_item.item.status),
         'image': (lambda walker_item: walker_item.item.image),
+        'imageid': (lambda walker_item: walker_item.item.imagesid),
         'ports': (lambda walker_item: format_ports(walker_item.item.ports)),
         'names': (lambda walker_item, sep=', ': sep.join(walker_item.item.names)),
         'ip': (lambda walker_item: walker_item.item.ip),
+        'ipv6': (lambda walker_item: walker_item.item.ipv6),
+        'mac': (lambda walker_item: walker_item.item.mac),
         }
 
     def write_result(self, handle, all=False, output=None, mode_ascii=False, data_format=None):
@@ -60,11 +63,11 @@ class Containers(Attributable):
             self.write_digraph(handle_wrapped, walking, as_point=as_point)
         elif output==u'table':
             if data_format is None:
-                data_format = u'id/image/command/createdrel" ago"#created/status/ports/names'
+                data_format = u'id/imageid/image/command/createdrel" ago"#created/status/ports/names'
             self.write_table(handle_wrapped, walking, all=all, data_format=data_format)
         elif output==u'treetable':
             if data_format is None:
-                data_format = u'id/image/command/createdrel" ago"#created/status/ports/names'
+                data_format = u'id/imageid/image/command/createdrel" ago"#created/status/ports/names'
             self.write_treetable(handle_wrapped, walking, all=all, data_format=data_format, mode_ascii=mode_ascii)
 
 

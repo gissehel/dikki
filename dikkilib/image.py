@@ -33,5 +33,5 @@ class Image(object):
         parent.children.append(self)
 
     def is_important(self):
-        return len(self.tags)>0 or len(self.children)!=1
+        return len(self.tags)>0 or len(self.children)!=1 or (self.parent is None)
 

@@ -28,15 +28,18 @@ class Dikki(object):
         # print (args, kwargs)
         outputs = (u'tree',u'digraph',u'table',u'treetable')
         if 'output' not in kwargs:
-            self.errorexit(u'You must provide an output for images. Correct values are : %s' % (u', '.join(list(outputs)),))
-        if kwargs['output'] not in outputs:
-            self.errorexit(u'[%s] is invalid : output must be one of : %s' % (kwargs['output'], u', '.join(list(outputs))))
+            output = u'treetable'
+            # self.errorexit(u'You must provide an output for images. Correct values are : %s' % (u', '.join(list(outputs)),))
+        else:
+            output = kwargs['output']
+        if output not in outputs:
+            self.errorexit(u'[%s] is invalid : output must be one of : %s' % (output, u', '.join(list(outputs))))
         if len(args) > 1:
             self.errorexit(u'Currently this tool only support one tag as argument.')
         tag = ''
         if len(args) > 0:
             tag = args[0]
-        self._images.write_result(sys.stdout, tag, all=('all' in kwargs), as_point=('point' in kwargs), output=kwargs['output'], mode_compact=('compact' in kwargs), mode_ascii=('ascii' in kwargs), data_format=(kwargs['format'] if 'format' in kwargs else None))
+        self._images.write_result(sys.stdout, tag, all=('all' in kwargs), as_point=('point' in kwargs), output=output, mode_compact=('compact' in kwargs), mode_ascii=('ascii' in kwargs), data_format=(kwargs['format'] if 'format' in kwargs else None))
 
     @CLRunner.command(params={
         'output': {'doc':'Output the images as [table]', 'aliases': ['O'], 'need_value': True},
@@ -46,14 +49,17 @@ class Dikki(object):
     def containers(self, args, kwargs):
         """Get docker containers"""
         # print (args, kwargs)
-        outputs = (u'table')
+        outputs = (u'table',)
         if 'output' not in kwargs:
-            self.errorexit(u'You must provide an output for images. Correct values are : %s' % (u', '.join(list(outputs)),))
-        if kwargs['output'] not in outputs:
-            self.errorexit(u'[%s] is invalid : output must be one of : %s' % (kwargs['output'], u', '.join(list(outputs))))
+            output = 'table'
+            # self.errorexit(u'You must provide an output for images. Correct values are : %s' % (u', '.join(list(outputs)),))
+        else:
+            output = kwargs['output']
+        if output not in outputs:
+            self.errorexit(u'[%s] is invalid : output must be one of : %s' % (output, u', '.join(list(outputs))))
         if len(args) > 0:
             self.errorexit(u'Currently this tool doesn\'t support container name.')
-        self._containers.write_result(sys.stdout, all=('all' in kwargs), output=kwargs['output'], mode_ascii=('ascii' in kwargs), data_format=(kwargs['format'] if 'format' in kwargs else None))
+        self._containers.write_result(sys.stdout, all=('all' in kwargs), output=output, mode_ascii=('ascii' in kwargs), data_format=(kwargs['format'] if 'format' in kwargs else None))
 
     @CLRunner.param(name='help',aliases=['h'])
     def help_param(self,**kwargs) :

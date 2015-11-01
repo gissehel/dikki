@@ -14,7 +14,7 @@ from .raw_docker import RawDocker
 
 def main() :
     raw_docker = RawDocker()
-    images = Images(Image, ImageWalker, raw_docker)
+    images = Images(Image, ImageWalker, Container, raw_docker)
     containers = Containers(Container, ContainerWalker, raw_docker)
     dikki = Dikki(images, containers)
     if not(dikki.run( sys.argv )) :

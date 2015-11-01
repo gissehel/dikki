@@ -11,11 +11,12 @@ from .tools import format_time_rel
 from .tools import wrap_handle
 
 class Images(Attributable):
-    def __init__(self, image_class, image_walker_class, raw_docker) :
+    def __init__(self, image_class, image_walker_class, container_class, raw_docker) :
         self._by_id = {}
         self._by_tag = {}
         self._Image = image_class
         self._ImageWalker = image_walker_class
+        self._Container = container_class
         self._raw_docker = raw_docker
         self._image_walker = None
         
@@ -115,6 +116,19 @@ class Images(Attributable):
                         important_parents[image] = important_parents[parent]
         self._important_image_walker.froze_walker()
 
+    def load_status(self):
+        containers = [ self._Container(raw_container, self._raw_docker.get_container_info(raw_container['Id'])) for raw_container in self._raw_docker.get_containers() ]
+        for container in containers:
+            if container.imagelid in self._by_id:
+                if container.running:
+                    self._by_id[container.imagelid].set_running()
+                else:
+                    self._by_id[container.imagelid].set_stopped()
+                loop_image = self._by_id[container.imagelid]
+                while loop_image is not None:
+                    loop_image.set_child_stop_or_running()
+                    loop_image = loop_image.parent
+
     _attribut_getter = {
         'id': (lambda walker_item: walker_item.item.sid),
         'longid': (lambda walker_item: walker_item.item.lid),
@@ -125,10 +139,12 @@ class Images(Attributable):
         'parentid': (lambda walker_item: (walker_item.parent.item.sid if walker_item.parent is not None else '')),
         'created': (lambda walker_item: format_time(walker_item.item.created)),
         'createdrel': (lambda walker_item: format_time_rel(walker_item.item.created)),
+        'status': (lambda walker_item: walker_item.item.get_run_status())
         }
 
     def write_result(self, handle, tag=u'', all=False, as_point=True, output=None, mode_compact=False, mode_ascii=False, data_format=None):
         self.load_images()
+        self.load_status()
         handle_wrapped = wrap_handle(handle,'utf-8')
         walking = self.get_walking_object(tag, all=all)
         if output==u'tree':
@@ -147,7 +163,7 @@ class Images(Attributable):
             self.write_table(handle_wrapped, walking, all=all, data_format=data_format)
         elif output==u'treetable':
             if data_format is None:
-                data_format = u'id/tags/created/createdrel" ago"#created/vsize/diffsize'
+                data_format = u'id/status#S/tags/created/createdrel" ago"#created/vsize/diffsize'
             self.write_treetable(handle_wrapped, walking, all=all, data_format=data_format, mode_ascii=mode_ascii)
 
 

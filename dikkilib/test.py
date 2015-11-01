@@ -34,7 +34,7 @@ class TestDikki(unittest.TestCase):
         sys.stdout = self._stdout
 
         raw_docker = RawDockerMock()
-        images = Images(Image, ImageWalker, raw_docker)
+        images = Images(Image, ImageWalker, Container, raw_docker)
         containers = Containers(Container, ContainerWalker, raw_docker)
         self._dikki = Dikki(images, containers)
 

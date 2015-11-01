@@ -25,6 +25,9 @@ class Image(object):
             self.virtual_size = raw_image['VirtualSize']
             self.size = raw_image['Size']
             self.is_root = False
+        self.is_running = False
+        self.is_stopped = False
+        self.is_child_stop_or_running = False
         self.children = []
         self.parent = None
 
@@ -34,4 +37,24 @@ class Image(object):
 
     def is_important(self):
         return len(self.tags)>0 or len(self.children)!=1 or (self.parent is None)
+
+    def set_running(self):
+        self.is_running = True
+        self.is_child_stop_or_running = True
+
+    def set_stopped(self):
+        self.is_stopped = True
+        self.is_child_stop_or_running = True
+
+    def set_child_stop_or_running(self):
+        self.is_child_stop_or_running = True
+
+    def get_run_status(self):
+        if self.is_running:
+            return '*'
+        elif self.is_stopped:
+            return '+'
+        elif self.is_child_stop_or_running:
+            return '-'
+        return ' '
 

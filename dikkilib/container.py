@@ -1,11 +1,13 @@
 #!/usr/bin/env python
 # coding: utf-8
 
+from .tools import get_short_id
+
 class Container(object):
     def __init__(self, raw_container, raw_container_info):
         self._raw_container = raw_container
         self.lid = raw_container['Id']
-        self.sid = self.lid[:12]
+        self.sid = get_short_id(self.lid)
         self.name = '"%s"' % (self.sid,)
         
         self.names = []
@@ -20,7 +22,7 @@ class Container(object):
         self.status = raw_container['Status']
         self.tags = [None]
         self.imagelid = raw_container_info['Image']
-        self.imagesid = self.imagelid[:12]
+        self.imagesid = get_short_id(self.imagelid)
         self.running = raw_container_info['State']['Running']
         self.command = raw_container_info['Path']
         self.ip = raw_container_info['NetworkSettings']['IPAddress']

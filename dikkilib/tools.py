@@ -133,4 +133,9 @@ def wrap_handle(handle, encoding):
             handle.write(value.encode(encoding))
     return HandleWrapper()
 
+def get_short_id(long_id):
+    lid = long_id
+    if ':' in lid:
+        lid = lid.split(':')[1]
+    return lid[:12]
 

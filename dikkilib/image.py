@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # coding: utf-8
 
+from .tools import get_short_id
+
 class Image(object):
     def __init__(self, raw_image=None):
         self._raw_image = raw_image
@@ -14,7 +16,8 @@ class Image(object):
             self.is_root = True
         else:
             self.lid = raw_image['Id']
-            self.sid = self.lid[:12]
+            lid = self.lid
+            self.sid = get_short_id(self.lid)
             self.name = '"%s"' % (self.sid,)
             self.tags = []
             for tag in raw_image['RepoTags']:

@@ -96,13 +96,16 @@ class Images(Attributable):
             if image.parent_lid in self._by_id:
                 image.set_parent(self._by_id[image.parent_lid])
                 self._image_walker.set_parent(image, self._by_id[image.parent_lid])
+            else:
+                self._image_walker.get_walker_item(image)
 
         self._image_walker.froze_walker()
         important_parents = {}
         for walker_item, prefix in self._image_walker.walk():
             image = walker_item.item
             if walker_item.parent is None:
-                pass
+                if image.is_important():
+                    self._important_image_walker.get_walker_item(image)
             else:
                 parent = walker_item.parent.item
                 if parent.is_important():

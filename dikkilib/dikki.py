@@ -67,7 +67,11 @@ class Dikki(object):
         self.help_on_command(**kwargs)
 
     @CLRunner.command()
-    def help(self, args=[], kwargs={}) :
+    def help(self, args=None, kwargs=None) :
         """Give help"""
+        if args is None:
+                args = []
+        if kwargs is None:
+                kwargs = {}
         self.__super.help()
 

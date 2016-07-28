@@ -70,4 +70,5 @@ class Containers(Attributable):
                 data_format = u'id/imageid/image/command/createdrel" ago"#created/status/ports/names'
             self.write_treetable(handle_wrapped, walking, all=all, data_format=data_format, mode_ascii=mode_ascii)
 
-
+    def is_important(self):
+        return True

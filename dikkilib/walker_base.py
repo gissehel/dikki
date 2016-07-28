@@ -12,15 +12,14 @@ class WalkerBase(object):
 
     def get_walker_item(self, item):
         if isinstance(item, WalkerItem):
-            return item
+            item = item.item
         if item in self._walker_items:
             return self._walker_items[item]
         walker_item = WalkerItem(self, item)
         self._walker_items[item] = walker_item
         self._roots.add(walker_item)
         if self._frozen_roots is not None:
-            self._frozen_roots = list(self._roots)
-            self.sort(self._frozen_roots)
+            self.froze_walker()
 
         return walker_item
 
@@ -42,4 +41,12 @@ class WalkerBase(object):
         for walk_item in self._frozen_roots:
             for item, prefix in walk_item.walk():
                 yield (item, prefix)
+
+    def _remove_root(self, walker_item):
+        if walker_item in self._roots:
+            self._roots.remove(walker_item)
+            if self._frozen_roots is not None:
+                self.froze_walker()
+
+
 

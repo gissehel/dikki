@@ -7,6 +7,7 @@ class WalkerItem(object):
         self.item = item
         self.parent = None
         self.children = []
+        self._attr_cache = {}
 
     def is_root(self):
         return self.parent is None
@@ -15,11 +16,7 @@ class WalkerItem(object):
         walker_parent = self._walker.get_walker_item(parent)
         self.parent = walker_parent
         walker_parent.children.append(self)
-        if self in self._walker._roots:
-            self._walker._roots.remove(self)
-            if self._walker._frozen_roots is not None:
-                self._walker._frozen_roots = list(self._walker._roots)
-                self.sort(self._walker._frozen_roots)
+        self._walker._remove_root(self)
 
     def walk(self):
         yield (self, [])
@@ -29,4 +26,15 @@ class WalkerItem(object):
                     yield (item, [False]+prefix)
             for item, prefix in self.children[-1].walk():
                 yield (item, [True]+prefix)
+
+    def is_important(self):
+        return self.item.is_important() or len(self.children)!=1 or (self.parent is None)
+
+    def recursive_get(self, prop):
+        if prop not in self._attr_cache:
+            value = getattr(self.item, prop)
+            if value is None and self.parent is not None:
+                value = self.parent.recursive_get(prop)
+            self._attr_cache[prop] = value
+        return self._attr_cache[prop]
 

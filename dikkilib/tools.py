@@ -9,6 +9,11 @@ from math import log
 def show(obj):
     print yaml.safe_dump(obj, default_flow_style=False)
 
+def serialize(obj, filename):
+    #with open(filename, 'wb') as handle:
+    #    handle.write(yaml.safe_dump(obj, default_flow_style=False))
+    return obj
+
 def get_tree_prefix(prefix, mode_ascii=False):
     if mode_ascii:
         font = (u' ',u'|',u' ',u'`',u'+',u'-')
@@ -62,9 +67,13 @@ def write_table(handle, enumerable, header=None, sep=None):
             handle.write(u'\n')
 
 def format_time(value):
+    if value == 0:
+        return ''
     return time.strftime(u'%Y-%m-%d %H:%M:%S',time.gmtime(value))
 
 def format_time_rel(value):
+    if value==0:
+        return u''
     diff = time.time()-value
     if diff<0:
         return u"future"
@@ -116,6 +125,7 @@ def format_bool(value):
 def human_readable_bytes(x):
     # hybrid of http://stackoverflow.com/a/10171475/2595465
     #      with http://stackoverflow.com/a/5414105/2595465
+    if x is None: return u''
     if x == 0: return u'0'
     magnitude = int(log(abs(x),10))
     if magnitude > 16:

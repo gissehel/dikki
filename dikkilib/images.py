@@ -80,15 +80,19 @@ class Images(Attributable):
         return walking
 
     def load_images(self):
-        images = [ self._Image(raw_image) for raw_image in self._raw_docker.get_images() ]
+        images = [ self._Image(raw_image=raw_image, image_info=self._raw_docker.get_image_info(raw_image['Id'])) for raw_image in self._raw_docker.get_images() ]
 
         self._by_id = {}
         self._by_tag = {}
+        self._by_tid = {}
         self._image_walker = self._ImageWalker()
-        self._important_image_walker = self._ImageWalker()
 
         for image in images :
             self._by_id[image.lid] = image
+            if image.tid is not None:
+                if image.tid not in self._by_tid:
+                    self._by_tid[image.tid] = []
+                self._by_tid[image.tid].append(image)
             for tag in image.tags:
                 self._by_tag[tag] = image
 
@@ -99,22 +103,43 @@ class Images(Attributable):
             else:
                 self._image_walker.get_walker_item(image)
 
+        for image_walker in list(self._image_walker._roots):
+            current_image = image_walker.item
+            continuation = True
+            while continuation and current_image.parent_tid is not None:
+                if current_image.parent_tid in self._by_tid:
+                    parent_image = self._by_tid[current_image.parent_tid][0]
+                else:
+                    parent_image = self._Image(tids=current_image.tids[:-1])
+                    if current_image.parent_tid not in self._by_tid:
+                        self._by_tid[current_image.parent_tid] = []
+                    self._by_tid[current_image.parent_tid].append(parent_image)
+
+                if self._image_walker.get_walker_item(current_image).parent is None:
+                    self._image_walker.set_parent(current_image, parent_image)
+                    current_image = parent_image
+                else:
+                    continuation = False
+
+
         self._image_walker.froze_walker()
+
         important_parents = {}
+        self._important_image_walker = self._ImageWalker()
         for walker_item, prefix in self._image_walker.walk():
             image = walker_item.item
             if walker_item.parent is None:
-                if image.is_important():
+                if walker_item.is_important():
                     self._important_image_walker.get_walker_item(image)
             else:
                 parent = walker_item.parent.item
-                if parent.is_important():
-                    if image.is_important():
+                if walker_item.parent.is_important():
+                    if walker_item.is_important():
                         self._important_image_walker.set_parent(image, parent)
                     important_parents[image] = parent
                 else:
                     if parent in important_parents :
-                        if image.is_important():
+                        if walker_item.is_important():
                             self._important_image_walker.set_parent(image, important_parents[parent])
                         important_parents[image] = important_parents[parent]
         self._important_image_walker.froze_walker()
@@ -136,8 +161,8 @@ class Images(Attributable):
         'id': (lambda walker_item: walker_item.item.sid),
         'longid': (lambda walker_item: walker_item.item.lid),
         'tags': (lambda walker_item,sep=' ': sep.join(sorted(walker_item.item.tags))),
-        'vsize': (lambda walker_item: human_readable_bytes(walker_item.item.virtual_size)),
-        'diffsize': (lambda walker_item: human_readable_bytes(walker_item.item.virtual_size-(walker_item.parent.item.virtual_size if walker_item.parent is not None else 0))),
+        'vsize': (lambda walker_item: human_readable_bytes(walker_item.recursive_get('virtual_size'))),
+        'diffsize': (lambda walker_item: (human_readable_bytes(walker_item.recursive_get('virtual_size')-(walker_item.parent.recursive_get('virtual_size') if walker_item.parent is not None else 0) if walker_item.parent is not None and walker_item.parent.recursive_get('virtual_size') is not None else walker_item.recursive_get('virtual_size')))),
         'size': (lambda walker_item: human_readable_bytes(walker_item.item.size)),
         'parentid': (lambda walker_item: (walker_item.parent.item.sid if walker_item.parent is not None else '')),
         'created': (lambda walker_item: format_time(walker_item.item.created)),

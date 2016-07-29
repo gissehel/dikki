@@ -152,10 +152,11 @@ class Images(Attributable):
                     self._by_id[container.imagelid].set_running()
                 else:
                     self._by_id[container.imagelid].set_stopped()
-                loop_image = self._by_id[container.imagelid]
-                while loop_image is not None:
-                    loop_image.set_child_stop_or_running()
-                    loop_image = loop_image.parent
+                loop_image_walker = self._image_walker.get_walker_item(self._by_id[container.imagelid])
+                while loop_image_walker is not None:
+                    if loop_image_walker.item is not None:
+                        loop_image_walker.item.set_child_stop_or_running()
+                    loop_image_walker = loop_image_walker.parent
 
     _attribut_getter = {
         'id': (lambda walker_item: walker_item.item.sid),

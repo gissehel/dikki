@@ -11,9 +11,10 @@ from supertools import superable
 @superable
 class Dikki(object):
     '''Docker tool to query informations from images and containers'''
-    def __init__(self, images, containers):
+    def __init__(self, images, containers, raw_docker):
         self._images = images
         self._containers = containers
+        self._raw_docker = raw_docker
 
     @CLRunner.command(params={
         'output': {'doc':'Output the images as [tree|digraph|table|treetable]', 'aliases': ['O'], 'need_value': True},
@@ -65,6 +66,11 @@ class Dikki(object):
     def help_param(self,**kwargs) :
         '''Get help on specific command'''
         self.help_on_command(**kwargs)
+
+    @CLRunner.param(name='debug',aliases=['D'])
+    def debug_docker(self, **kwargs):
+        '''Log all docker communications to files'''
+        self._raw_docker.set_debug(True)
 
     @CLRunner.command()
     def help(self, args=[], kwargs={}) :

@@ -10,8 +10,8 @@ def show(obj):
     print yaml.safe_dump(obj, default_flow_style=False)
 
 def serialize(obj, filename):
-    #with open(filename, 'wb') as handle:
-    #    handle.write(yaml.safe_dump(obj, default_flow_style=False))
+    with open(filename, 'wb') as handle:
+        handle.write(yaml.safe_dump(obj, default_flow_style=False))
     return obj
 
 def get_tree_prefix(prefix, mode_ascii=False):

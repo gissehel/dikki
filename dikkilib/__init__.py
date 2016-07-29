@@ -16,7 +16,7 @@ def main() :
     raw_docker = RawDocker()
     images = Images(Image, ImageWalker, Container, raw_docker)
     containers = Containers(Container, ContainerWalker, raw_docker)
-    dikki = Dikki(images, containers)
+    dikki = Dikki(images, containers, raw_docker)
     if not(dikki.run( sys.argv )) :
         sys.exit(1)
 

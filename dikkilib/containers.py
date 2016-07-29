@@ -42,6 +42,7 @@ class Containers(Attributable):
         'imageid': (lambda walker_item: walker_item.item.imagesid),
         'ports': (lambda walker_item: format_ports(walker_item.item.ports)),
         'names': (lambda walker_item, sep=', ': sep.join(walker_item.item.names)),
+        'name': (lambda walker_item: walker_item.item.name),
         'ip': (lambda walker_item: walker_item.item.ip),
         'ipv6': (lambda walker_item: walker_item.item.ipv6),
         'mac': (lambda walker_item: walker_item.item.mac),
@@ -63,11 +64,11 @@ class Containers(Attributable):
             self.write_digraph(handle_wrapped, walking, as_point=as_point)
         elif output==u'table':
             if data_format is None:
-                data_format = u'id/imageid/image/command/createdrel" ago"#created/status/ports/names'
+                data_format = u'id/imageid/image/command/createdrel" ago"#created/status/ports/name'
             self.write_table(handle_wrapped, walking, all=all, data_format=data_format)
         elif output==u'treetable':
             if data_format is None:
-                data_format = u'id/imageid/image/command/createdrel" ago"#created/status/ports/names'
+                data_format = u'id/imageid/image/command/createdrel" ago"#created/status/ports/name'
             self.write_treetable(handle_wrapped, walking, all=all, data_format=data_format, mode_ascii=mode_ascii)
 
     def is_important(self):

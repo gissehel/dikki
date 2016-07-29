@@ -11,13 +11,17 @@ class Container(object):
         self.name = '"%s"' % (self.sid,)
         
         self.names = []
-        for name in raw_container['Names']:
-            if name.startswith('/'):
-                self.names.append(name[1:])
-            else:
-                raise Exception('Unexpected container name not starting by / : [%s] (Id:%s)' % (name,self.sid))
+        if 'Names' in raw_container:
+            for name in raw_container['Names']:
+                self.names.append(self.get_container_name(name))
+        if 'Name' in raw_container_info:
+            self.name = self.get_container_name(raw_container_info['Name'])
         self.created = raw_container['Created']
         self.image = raw_container['Image']
+        if self.image.startswith('sha256:'):
+            self.image = get_short_id(self.image)
+            if 'Config' in raw_container_info and 'Image' in raw_container_info['Config']:
+                self.image = '{id} (was {name})'.format(id=self.image, name=raw_container_info['Config']['Image'])
         self.ports = raw_container['Ports']
         self.status = raw_container['Status']
         self.tags = [None]
@@ -29,6 +33,13 @@ class Container(object):
         self.ipv6 = raw_container_info['NetworkSettings']['LinkLocalIPv6Address']
         self.mac = raw_container_info['NetworkSettings']['MacAddress']
         self.is_important = self.running
+
+    def get_container_name(self, rawname):
+        if rawname.startswith('/'):
+            return rawname[1:]
+        else:
+            raise Exception('Unexpected container name not starting by / : [{rawname}] (Id:{id})'.format(rawname=rawname,id=self.sid))
+
 
     #def set_parent(self, parent):
     #    self.parent = parent

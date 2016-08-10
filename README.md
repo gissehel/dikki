@@ -380,5 +380,9 @@ e2e9ea0741ab  ubuntu:14.04     2014-12-14 03:45:31  7 hours ago  Up 7 hours     
 cfec26c45be3  ubuntu:14.04     2014-12-14 03:45:23  7 hours ago  Exited (0) 7 hours ago                ubu             
 ```
 
+# Known bugs
 
+Since some layers don't have ids, the size of those layers is seen as 0, while they may have a non null size.
+
+The total size of the layer (vsize) for who have ids is still ok, but the difference size (diffsize) may be wrong.
 

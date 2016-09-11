@@ -27,9 +27,10 @@ class Image(object):
             lid = self.lid
             self.sid = get_short_id(self.lid)
             self.name = '"%s"' % (self.sid,)
-            for tag in raw_image['RepoTags']:
-                if tag != u'<none>:<none>':
-                    self.tags.append(tag)
+            if raw_image['RepoTags'] is not None:
+                for tag in raw_image['RepoTags']:
+                    if tag != u'<none>:<none>':
+                        self.tags.append(tag)
             self.parent_lid = raw_image['ParentId']
             self.created = raw_image['Created']
             self.virtual_size = raw_image['VirtualSize']

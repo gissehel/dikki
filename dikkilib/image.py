@@ -79,3 +79,10 @@ class Image(object):
             return '-'
         return ' '
 
+    def get_created(self):
+        if self.created > 0:
+            return self.created
+        if len(self.children)>0:
+            return min(child.get_created() for child in self.children)
+        return 0
+

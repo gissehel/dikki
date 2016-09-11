@@ -75,7 +75,7 @@ class Images(Attributable):
         if ref_images is None:
             walking = walker.walk()
         else:
-            walking = chain.from_iterable(walker.get_walker_item(ref_image).walk() for ref_image in sorted(ref_images, key=lambda image:-image.created))
+            walking = chain.from_iterable(walker.get_walker_item(ref_image).walk() for ref_image in sorted(ref_images, key=lambda image:-image.get_created()))
 
         return walking
 
@@ -116,6 +116,7 @@ class Images(Attributable):
                     self._by_tid[current_image.parent_tid].append(parent_image)
 
                 if self._image_walker.get_walker_item(current_image).parent is None:
+                    current_image.set_parent(parent_image)
                     self._image_walker.set_parent(current_image, parent_image)
                     current_image = parent_image
                 else:
@@ -166,8 +167,8 @@ class Images(Attributable):
         'diffsize': (lambda walker_item: (human_readable_bytes(walker_item.recursive_get('virtual_size')-(walker_item.parent.recursive_get('virtual_size') if walker_item.parent is not None else 0) if walker_item.parent is not None and walker_item.parent.recursive_get('virtual_size') is not None else walker_item.recursive_get('virtual_size')))),
         'size': (lambda walker_item: human_readable_bytes(walker_item.item.size)),
         'parentid': (lambda walker_item: (walker_item.parent.item.sid if walker_item.parent is not None else '')),
-        'created': (lambda walker_item: format_time(walker_item.item.created)),
-        'createdrel': (lambda walker_item: format_time_rel(walker_item.item.created)),
+        'created': (lambda walker_item: format_time(walker_item.item.get_created())),
+        'createdrel': (lambda walker_item: format_time_rel(walker_item.item.get_created())),
         'status': (lambda walker_item: walker_item.item.get_run_status())
         }
 

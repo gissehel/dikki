@@ -37,11 +37,12 @@ class Images(Attributable):
 
     def write_digraph(self, handle=None, walking=None, as_point=True):
         handle.write(u'digraph docker {\n')
+        handle.write(u'  rankdir="LR";\n')
         for walker_item, prefix in walking:
             image = walker_item.item
             children = [ walker_child.item for walker_child in walker_item.children ]
             for child in children:
-                handle.write(u' %s -> %s\n' % (image.name, child.name))
+                handle.write(u' "%s" -> "%s"\n' % (image.sid, child.sid))
             if len(image.tags)>0:
                 handle.write(u' %s [label="%s",shape=box,fillcolor="paleturquoise",style="filled,rounded"];\n' % (image.name, u'\\n'.join([image.sid] + sorted(image.tags))))
             elif as_point:

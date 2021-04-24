@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "dikki"
+version = "0.2.0"
+description = "A tool to query and visualize docker containers and images"
+authors = ["gissehel <public-dev-dikki@gissehel.org>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.6"
+docker = "^5.0.0"
+cltools = "^0.5.0"
+PyYAML = "^5.4.1"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

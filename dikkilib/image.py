@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # coding: utf-8
 
 from .tools import get_short_id
@@ -29,7 +29,7 @@ class Image(object):
             self.name = '"%s"' % (self.sid,)
             if raw_image['RepoTags'] is not None:
                 for tag in raw_image['RepoTags']:
-                    if tag != u'<none>:<none>':
+                    if tag != '<none>:<none>':
                         self.tags.append(tag)
             self.parent_lid = raw_image['ParentId']
             self.created = raw_image['Created']

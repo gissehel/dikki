@@ -1,7 +1,6 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # coding: utf-8
 
-from __future__ import absolute_import
 from .walker_item import WalkerItem
 
 class WalkerBase(object): 
@@ -27,7 +26,7 @@ class WalkerBase(object):
         self._frozen_roots = list(self._roots)
         self.sort(self._frozen_roots)
 
-        for walker_item in self._walker_items.values():
+        for walker_item in list(self._walker_items.values()):
             self.sort(walker_item.children)
 
     def sort(self, list):

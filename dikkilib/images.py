@@ -1,7 +1,6 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # coding: utf-8
 
-from __future__ import absolute_import
 from itertools import chain
 from .attributable import Attributable
 from .tools import human_readable_bytes
@@ -26,50 +25,50 @@ class Images(Attributable):
             return None
         xtag = tag
         if ':' not in xtag:
-            xtag = xtag + u':latest'
+            xtag = xtag + ':latest'
         if xtag in self._by_tag:
             return [ self._by_tag[xtag] ]
         ids = [xid for xid in self._by_id if xid.lower().startswith(tag)]
         if len(ids) == 0:
-            raise Exception(u'No image found (%r)' % (tag,))
+            raise Exception('No image found (%r)' % (tag,))
         else:
             return [ self._by_id[id] for id in ids ]
 
     def write_digraph(self, handle=None, walking=None, as_point=True):
-        handle.write(u'digraph docker {\n')
-        handle.write(u'  rankdir="LR";\n')
+        handle.write('digraph docker {\n')
+        handle.write('  rankdir="LR";\n')
         for walker_item, prefix in walking:
             image = walker_item.item
             children = [ walker_child.item for walker_child in walker_item.children ]
             for child in children:
-                handle.write(u' "%s" -> "%s"\n' % (image.sid, child.sid))
+                handle.write(' "%s" -> "%s"\n' % (image.sid, child.sid))
             if len(image.tags)>0:
-                handle.write(u' %s [label="%s",shape=box,fillcolor="paleturquoise",style="filled,rounded"];\n' % (image.name, u'\\n'.join([image.sid] + sorted(image.tags))))
+                handle.write(' %s [label="%s",shape=box,fillcolor="paleturquoise",style="filled,rounded"];\n' % (image.name, '\\n'.join([image.sid] + sorted(image.tags))))
             elif as_point:
-                handle.write(u' %s [label="%s",shape="point"];\n' % (image.name, ''))
-        handle.write(u'}\n')
+                handle.write(' %s [label="%s",shape="point"];\n' % (image.name, ''))
+        handle.write('}\n')
         
     def classic_format_tree_line(self, handle, walker_item):
         handle.write(walker_item.item.sid)
-        handle.write(u' Virtual Size: ')
+        handle.write(' Virtual Size: ')
         handle.write(human_readable_bytes(walker_item.item.virtual_size))
         if len(walker_item.item.tags)>0:
-            handle.write(u' Tags: ' + ', '.join(walker_item.item.tags))
+            handle.write(' Tags: ' + ', '.join(walker_item.item.tags))
 
     def compact_format_tree_line(self, handle, walker_item):
         handle.write(walker_item.item.sid)
         if len(walker_item.item.tags)>0:
-            handle.write(u'     ' + u'  '.join(walker_item.item.tags))
+            handle.write('     ' + '  '.join(walker_item.item.tags))
 
     def get_tree_formatter(self, generic_format):
         def tree_formatter(handle, walker_item):
-            for count, value in enumerate(self.get_attributes(walker_item, generic_format.split(u'/'))):
+            for count, value in enumerate(self.get_attributes(walker_item, generic_format.split('/'))):
                 if count > 0 and len(value) > 0:
-                    handle.write(u' ')
+                    handle.write(' ')
                 handle.write(value)
         return tree_formatter
 
-    def get_walking_object(self, tag=u'', all=False):
+    def get_walking_object(self, tag='', all=False):
         ref_images = self.find_image(tag)
         walker = self._image_walker if all else self._important_image_walker
 
@@ -173,28 +172,28 @@ class Images(Attributable):
         'status': (lambda walker_item: walker_item.item.get_run_status())
         }
 
-    def write_result(self, handle, tag=u'', all=False, as_point=True, output=None, mode_compact=False, mode_ascii=False, data_format=None):
+    def write_result(self, handle, tag='', all=False, as_point=True, output=None, mode_compact=False, mode_ascii=False, data_format=None):
         self.load_images()
         self.load_status()
         handle_wrapped = wrap_handle(handle,'utf-8')
         walking = self.get_walking_object(tag, all=all)
-        if output==u'tree':
+        if output=='tree':
             if data_format is None:
                 if mode_compact:
-                    data_format = u'id/" [ "tags" ]"'
+                    data_format = 'id/" [ "tags" ]"'
                 else:
-                    data_format = u'id/"Virtual Size: "vsize/"Tags: "tags<, >'
+                    data_format = 'id/"Virtual Size: "vsize/"Tags: "tags<, >'
             formatter = self.get_tree_formatter(data_format)
             write_tree(handle_wrapped, walking, formatter, mode_ascii)
-        elif output==u'digraph':
+        elif output=='digraph':
             self.write_digraph(handle_wrapped, walking, as_point=as_point)
-        elif output==u'table':
+        elif output=='table':
             if data_format is None:
-                data_format = u'id/tags/created/createdrel" ago"#created/vsize/diffsize'
+                data_format = 'id/tags/created/createdrel" ago"#created/vsize/diffsize'
             self.write_table(handle_wrapped, walking, all=all, data_format=data_format)
-        elif output==u'treetable':
+        elif output=='treetable':
             if data_format is None:
-                data_format = u'id/status#S/tags/created/createdrel" ago"#created/vsize/diffsize'
+                data_format = 'id/status#S/tags/created/createdrel" ago"#created/vsize/diffsize'
             self.write_treetable(handle_wrapped, walking, all=all, data_format=data_format, mode_ascii=mode_ascii)
 
 

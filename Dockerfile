@@ -1,5 +1,5 @@
-FROM python:2-onbuild
+FROM python:3-onbuild
 MAINTAINER Gissehel "public-maintainer-docker-dikki@gissehel.org"
 
-ENTRYPOINT [ "python", "./dikki.py" ]
+ENTRYPOINT [ "python3", "./dikki.py" ]
 

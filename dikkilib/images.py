@@ -166,6 +166,8 @@ class Images(Attributable):
     _attribut_getter = {
         'id': (lambda walker_item: walker_item.item.sid),
         'longid': (lambda walker_item: walker_item.item.lid),
+        'title': (lambda walker_item: walker_item.item.title if walker_item.item.title is not None else ''),
+        'version': (lambda walker_item: walker_item.item.version if walker_item.item.version is not None else ''),
         'tags': (lambda walker_item,sep=' ': sep.join(sorted(walker_item.item.tags))),
         'vsize': (lambda walker_item: human_readable_bytes(walker_item.recursive_get('virtual_size'))),
         'diffsize': (lambda walker_item: (human_readable_bytes(walker_item.recursive_get('virtual_size')-(walker_item.parent.recursive_get('virtual_size') if walker_item.parent is not None else 0) if walker_item.parent is not None and walker_item.parent.recursive_get('virtual_size') is not None else walker_item.recursive_get('virtual_size')))),
@@ -193,11 +195,11 @@ class Images(Attributable):
             self.write_digraph(handle_wrapped, walking, as_point=as_point)
         elif output=='table':
             if data_format is None:
-                data_format = 'id/tags/created/createdrel" ago"#created/vsize/diffsize'
+                data_format = 'id/tags/title/version/created/createdrel" ago"#created/vsize/diffsize'
             self.write_table(handle_wrapped, walking, all=all, data_format=data_format)
         elif output=='treetable':
             if data_format is None:
-                data_format = 'id/status#S/tags/created/createdrel" ago"#created/vsize/diffsize'
+                data_format = 'id/status#S/tags/title/version/created/createdrel" ago"#created/vsize/diffsize'
             self.write_treetable(handle_wrapped, walking, all=all, data_format=data_format, mode_ascii=mode_ascii)
 
 

@@ -3,6 +3,12 @@
 
 from .tools import get_short_id
 
+def get_best_value_from_labels(labels, label_best_keys):
+    for label_best_key in label_best_keys:
+        if label_best_key in labels:
+            return labels[label_best_key]
+    return None
+
 class Image(object):
     def __init__(self, raw_image=None, image_info=None, tids=None):
         self._raw_image = raw_image
@@ -13,6 +19,8 @@ class Image(object):
         self.created = 0
         self.virtual_size = None
         self.tags = []
+        self.title = None
+        self.version = None
 
         if raw_image is None :
             self.lid = '<no image>'
@@ -35,6 +43,10 @@ class Image(object):
             self.created = raw_image['Created']
             self.virtual_size = raw_image['VirtualSize']
             self.size = raw_image['Size']
+            if 'Labels' in raw_image and raw_image['Labels'] is not None:
+                labels = raw_image['Labels']
+                self.title = get_best_value_from_labels(labels, ['org.opencontainers.image.title', 'org.label-schema.name'])
+                self.version = get_best_value_from_labels(labels, ['org.opencontainers.image.version', 'org.label-schema.version', 'Version'])
 
             if image_info is not None:
                 self.tids = list(get_short_id(layer_id) for layer_id in image_info['RootFS']['Layers'])

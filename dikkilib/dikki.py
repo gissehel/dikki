@@ -18,6 +18,7 @@ class Dikki(object):
         'all': {'doc':'Display all nodes', 'aliases': ['a']},
         'compact': {'doc':'Display trees with compact pattern', 'aliases': ['c']},
         'ascii': {'doc':'Display trees with ascii chars', 'aliases': ['A']},
+        'root-as-important': {'doc':'Display tree roots as important', 'alias':['R']},
         'point': {'doc':'Display non-important nodes as point in graphs', 'aliases': ['p']},
         'format': {'doc':'Format for table, tree and treetable', 'aliases': ['f'], 'need_value': True},
         })
@@ -37,7 +38,7 @@ class Dikki(object):
         tag = ''
         if len(args) > 0:
             tag = args[0]
-        self._images.write_result(sys.stdout, tag, all=('all' in kwargs), as_point=('point' in kwargs), output=output, mode_compact=('compact' in kwargs), mode_ascii=('ascii' in kwargs), data_format=(kwargs['format'] if 'format' in kwargs else None))
+        self._images.write_result(sys.stdout, tag, all=('all' in kwargs), root_as_important=('root-as-important' in kwargs), as_point=('point' in kwargs), output=output, mode_compact=('compact' in kwargs), mode_ascii=('ascii' in kwargs), data_format=(kwargs['format'] if 'format' in kwargs else None))
 
     @CLRunner.command(params={
         'output': {'doc':'Output the images as [table]', 'aliases': ['O'], 'need_value': True},

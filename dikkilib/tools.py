@@ -29,12 +29,14 @@ def get_tree_prefix(prefix, mode_ascii=False):
         else:
             result += font[1]
         result += font[2]
+        result += font[2]
     for prefix_part in prefix[-1:]:
         if prefix_part:
             result += font[3]
         else:
             result += font[4]
         result += font[5]
+        result += font[2]
     return result
 
 

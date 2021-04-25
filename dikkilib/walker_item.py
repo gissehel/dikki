@@ -27,8 +27,8 @@ class WalkerItem(object):
             for item, prefix in self.children[-1].walk():
                 yield (item, [True]+prefix)
 
-    def is_important(self):
-        return self.item.is_important() or len(self.children)!=1 or (self.parent is None)
+    def is_important(self, root_as_important=False):
+        return self.item.is_important() or len(self.children)!=1 or (root_as_important and (self.parent is None))
 
     def recursive_get(self, prop):
         if prop not in self._attr_cache:

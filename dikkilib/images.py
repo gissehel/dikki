@@ -79,7 +79,7 @@ class Images(Attributable):
 
         return walking
 
-    def load_images(self):
+    def load_images(self, root_as_important=False):
         images = [ self._Image(raw_image=raw_image, image_info=self._raw_docker.get_image_info(raw_image['Id'])) for raw_image in self._raw_docker.get_images() ]
 
         self._by_id = {}
@@ -130,19 +130,23 @@ class Images(Attributable):
         for walker_item, prefix in self._image_walker.walk():
             image = walker_item.item
             if walker_item.parent is None:
-                if walker_item.is_important():
-                    self._important_image_walker.get_walker_item(image)
+                if walker_item.is_important(root_as_important=root_as_important):
+                    if root_as_important:
+                        self._important_image_walker.get_walker_item(image)
             else:
                 parent = walker_item.parent.item
-                if walker_item.parent.is_important():
-                    if walker_item.is_important():
+                if walker_item.parent.is_important(root_as_important=root_as_important):
+                    if walker_item.is_important(root_as_important=root_as_important):
                         self._important_image_walker.set_parent(image, parent)
                     important_parents[image] = parent
                 else:
-                    if parent in important_parents :
-                        if walker_item.is_important():
+                    if parent in important_parents:
+                        if walker_item.is_important(root_as_important=root_as_important):
                             self._important_image_walker.set_parent(image, important_parents[parent])
                         important_parents[image] = important_parents[parent]
+                    else:
+                        if walker_item.is_important(root_as_important=root_as_important):
+                            self._important_image_walker.get_walker_item(image)
         self._important_image_walker.froze_walker()
 
     def load_status(self):
@@ -172,8 +176,8 @@ class Images(Attributable):
         'status': (lambda walker_item: walker_item.item.get_run_status())
         }
 
-    def write_result(self, handle, tag='', all=False, as_point=True, output=None, mode_compact=False, mode_ascii=False, data_format=None):
-        self.load_images()
+    def write_result(self, handle, tag='', all=False, root_as_important=False, as_point=True, output=None, mode_compact=False, mode_ascii=False, data_format=None):
+        self.load_images(root_as_important=root_as_important)
         self.load_status()
         handle_wrapped = wrap_handle(handle,'utf-8')
         walking = self.get_walking_object(tag, all=all)

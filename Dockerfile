@@ -1,9 +1,9 @@
-FROM python:3-onbuild
-MAINTAINER Gissehel "public-maintainer-docker-dikki@gissehel.org"
+FROM python:3-alpine
 
-ARG BUILD_DATE=now
-ARG VCS_REF=working-copy
-ARG VERSION=latest
+ARG \
+    BUILD_DATE=now \
+    VCS_REF=working-copy \
+    VERSION=latest
 
 LABEL \
       org.opencontainers.image.created="${BUILD_DATE}" \
@@ -22,7 +22,16 @@ LABEL \
       org.label-schema.version="${VERSION}" \
       org.label-schema.vendor="gissehel" \
       org.label-schema.vcs-url="https://github.com/gissehel/dikki" \
-      org.label-schema.schema-version="1.0"
+      org.label-schema.schema-version="1.0" \
+      maintainer="Gissehel <public-maintainer-docker-dikki@gissehel.org>"
 
-ENTRYPOINT [ "python3", "./dikki.py" ]
+RUN \
+    mkdir -p /app/dikkilib
+COPY ./dikki.py ./requirements.txt /app/
+COPY dikkilib /app/dikkilib
+RUN \
+    cd /app/ && \
+    pip3 install -r requirements.txt
+
+ENTRYPOINT [ "python3", "/app/dikki.py" ]
 

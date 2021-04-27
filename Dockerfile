@@ -1,9 +1,8 @@
 FROM python:3-alpine
 
-ARG \
-    BUILD_DATE=now \
-    VCS_REF=working-copy \
-    VERSION=latest
+ARG BUILD_DATE=now
+ARG VCS_REF=working-copy
+ARG VERSION=latest
 
 LABEL \
       org.opencontainers.image.created="${BUILD_DATE}" \

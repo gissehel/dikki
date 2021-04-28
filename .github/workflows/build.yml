@@ -1,0 +1,45 @@
+name: 'build'
+
+on:
+    push:
+        branches:
+            - master
+
+    schedule:
+        - cron: "10 03 * * 5"
+
+    pull_request:
+
+jobs:
+    build:
+        name: 'Build'
+        runs-on: ubuntu-latest
+        steps:
+            - name: "Checkout"
+              uses: actions/checkout@v2
+
+            - name: "Set environment variables"
+              run: |
+                  echo "GITHUB_SHA_SHORT=$(echo ${GITHUB_SHA} | cut -c1-8)" >> "${GITHUB_ENV}"
+                  echo "IMAGE_NAME=$(echo ghcr.io/${{ secrets.CR_USER }}/${{ secrets.IMAGE_NAME }})" >> "${GITHUB_ENV}"
+                  echo "BUILD_DATE=$(TZ=Europe/Paris date -Iseconds)" >> "${GITHUB_ENV}"
+                  echo "VERSION=$(grep version pyproject.toml | sed -e 's/^[^"]*"//;s/"[^"]*$//')" >> "${GITHUB_ENV}"
+
+            - name: 'Login to github container registry'
+              uses: docker/login-action@v1
+              with:
+                  registry: ghcr.io
+                  username: ${{ secrets.CR_USER }}
+                  password: ${{ secrets.CR_PAT }}
+
+            - name: "Build image builder"
+              uses: docker/build-push-action@v2
+              with:
+                  push: true
+                  no-cache: true
+                  build-args: |
+                      VCS_REF=${{ env.GITHUB_SHA_SHORT }}
+                      BUILD_DATE=${{ env.BUILD_DATE }}
+                      VERSION=${{ env.VERSION }}
+                  tags: "${{ env.IMAGE_NAME }}:latest,${{ env.IMAGE_NAME }}:${{env.GITHUB_SHA_SHORT}},${{ env.IMAGE_NAME }}:${{ env.VERSION }},${{ env.IMAGE_NAME }}:${{ env.VERSION }}-${{ env.GITHUB_SHA_SHORT }}"
+

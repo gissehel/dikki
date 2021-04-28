@@ -41,5 +41,5 @@ jobs:
                       VCS_REF=${{ env.GITHUB_SHA_SHORT }}
                       BUILD_DATE=${{ env.BUILD_DATE }}
                       VERSION=${{ env.VERSION }}
-                  tags: "${{ env.IMAGE_NAME }}:latest,${{ env.IMAGE_NAME }}:${{env.GITHUB_SHA_SHORT}},${{ env.IMAGE_NAME }}:${{ env.VERSION }},${{ env.IMAGE_NAME }}:${{ env.VERSION }}-${{ env.GITHUB_SHA_SHORT }}"
+                  tags: "${{ env.IMAGE_NAME }}:${{env.GITHUB_SHA_SHORT}},${{ env.IMAGE_NAME }}:${{ env.VERSION }},${{ env.IMAGE_NAME }}:${{ env.VERSION }}-${{ env.GITHUB_SHA_SHORT }},${{ env.IMAGE_NAME }}:latest"
 

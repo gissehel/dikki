@@ -71,7 +71,11 @@ class Dikki(object):
         self._raw_docker.set_debug(True)
 
     @CLRunner.command()
-    def help(self, args=[], kwargs={}) :
+    def help(self, args=None, kwargs=None) :
         """Give help"""
+        if args is None:
+                args = []
+        if kwargs is None:
+                kwargs = {}
         super().help()
 

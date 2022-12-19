@@ -1,9 +1,7 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # coding: utf-8
 
-from __future__ import absolute_import
 from .walker_base import WalkerBase
-
 
 class ContainerWalkerItem(object):
     def __init__(self,item):

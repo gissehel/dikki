@@ -1,7 +1,6 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # coding: utf-8
 
-from __future__ import absolute_import
 import sys
 from .dikki import Dikki
 from .image import Image
@@ -16,7 +15,7 @@ def main() :
     raw_docker = RawDocker()
     images = Images(Image, ImageWalker, Container, raw_docker)
     containers = Containers(Container, ContainerWalker, raw_docker)
-    dikki = Dikki(images, containers)
+    dikki = Dikki(images, containers, raw_docker)
     if not(dikki.run( sys.argv )) :
         sys.exit(1)
 

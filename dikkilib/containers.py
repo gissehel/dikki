@@ -1,7 +1,6 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # coding: utf-8
 
-from __future__ import absolute_import
 from itertools import chain
 from .attributable import Attributable
 from .tools import human_readable_bytes
@@ -42,6 +41,7 @@ class Containers(Attributable):
         'imageid': (lambda walker_item: walker_item.item.imagesid),
         'ports': (lambda walker_item: format_ports(walker_item.item.ports)),
         'names': (lambda walker_item, sep=', ': sep.join(walker_item.item.names)),
+        'name': (lambda walker_item: walker_item.item.name),
         'ip': (lambda walker_item: walker_item.item.ip),
         'ipv6': (lambda walker_item: walker_item.item.ipv6),
         'mac': (lambda walker_item: walker_item.item.mac),
@@ -51,23 +51,24 @@ class Containers(Attributable):
         self.load_containers()
         handle_wrapped = wrap_handle(handle,'utf-8')
         walking = self.get_walking_object()
-        if output==u'tree':
+        if output=='tree':
             if data_format is None:
                 if mode_compact:
-                    data_format = u'id/" [ "tags" ]"'
+                    data_format = 'id/" [ "tags" ]"'
                 else:
-                    data_format = u'id/"Virtual Size: "vsize/"Tags: "tags<, >'
+                    data_format = 'id/"Virtual Size: "vsize/"Tags: "tags<, >'
             formatter = self.get_tree_formatter(data_format)
             write_tree(handle_wrapped, walking, formatter, mode_ascii)
-        elif output==u'digraph':
+        elif output=='digraph':
             self.write_digraph(handle_wrapped, walking, as_point=as_point)
-        elif output==u'table':
+        elif output=='table':
             if data_format is None:
-                data_format = u'id/imageid/image/command/createdrel" ago"#created/status/ports/names'
+                data_format = 'id/imageid/image/command/createdrel" ago"#created/status/ports/name'
             self.write_table(handle_wrapped, walking, all=all, data_format=data_format)
-        elif output==u'treetable':
+        elif output=='treetable':
             if data_format is None:
-                data_format = u'id/imageid/image/command/createdrel" ago"#created/status/ports/names'
+                data_format = 'id/imageid/image/command/createdrel" ago"#created/status/ports/name'
             self.write_treetable(handle_wrapped, walking, all=all, data_format=data_format, mode_ascii=mode_ascii)
 
-
+    def is_important(self):
+        return True

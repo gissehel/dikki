@@ -3,7 +3,8 @@
 Query docker informations. This tools aims to replace depecated `docker images --tree` dans deprecated `docker images --viz` as well as add more features to them.
 
 * **project page** : https://github.com/gissehel/dikki
-* **docker hub page** : https://registry.hub.docker.com/u/gissehel/dikki/
+* **docker hub page** : https://hub.docker.com/r/gissehel/dikki
+* **github package (ghcr.io) page** : https://github.com/users/gissehel/packages/container/package/dikki
 
 ## help
 
@@ -51,11 +52,19 @@ You can run this tool inside a docker container without installing it.
 ```
 sudo docker run -it --rm -v /run/docker.sock:/var/run/docker.sock gissehel/dikki help
 ```
+or from `ghcr.io`
+```
+sudo docker run -it --rm -v /run/docker.sock:/var/run/docker.sock ghcr.io/gissehel/dikki help
+```
 
 You can add an alias like :
 
 ```
 alias dikki='sudo docker run -i --rm -v /run/docker.sock:/var/run/docker.sock gissehel/dikki'
+```
+or from `ghcr.io`
+```
+alias dikki='sudo docker run -i --rm -v /run/docker.sock:/var/run/docker.sock ghcr.io/gissehel/dikki'
 ```
 
 and then use it like a classical application:
@@ -380,5 +389,9 @@ e2e9ea0741ab  ubuntu:14.04     2014-12-14 03:45:31  7 hours ago  Up 7 hours     
 cfec26c45be3  ubuntu:14.04     2014-12-14 03:45:23  7 hours ago  Exited (0) 7 hours ago                ubu             
 ```
 
+# Known bugs
 
+Since some layers don't have ids, the size of those layers is seen as 0, while they may have a non null size.
+
+The total size of the layer (vsize) for who have ids is still ok, but the difference size (diffsize) may be wrong.
 

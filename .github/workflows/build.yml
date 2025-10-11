@@ -17,7 +17,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: "Checkout"
-              uses: actions/checkout@v2
+              uses: actions/checkout@v4
 
             - name: "Set environment variables"
               run: |
@@ -27,14 +27,14 @@ jobs:
                   echo "VERSION=$(grep version pyproject.toml | sed -e 's/^[^"]*"//;s/"[^"]*$//')" >> "${GITHUB_ENV}"
 
             - name: 'Login to github container registry'
-              uses: docker/login-action@v1
+              uses: docker/login-action@v3
               with:
                   registry: ghcr.io
                   username: ${{ secrets.CR_USER }}
                   password: ${{ secrets.CR_PAT }}
 
             - name: "Build image builder"
-              uses: docker/build-push-action@v2
+              uses: docker/build-push-action@v6
               with:
                   push: true
                   no-cache: true
